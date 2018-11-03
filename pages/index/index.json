@@ -1,6 +1,7 @@
 {
   "usingComponents": {
-    "Media": "/components/media/media"
+    "Media": "/components/media/media",
+    "Cover": "/components/cover/cover"
   },
-  "enablePullDownRefresh": false
+  "enablePullDownRefresh": true
 }

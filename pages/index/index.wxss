@@ -1,17 +1,15 @@
 /**index.wxss**/
-.index-container {
-  /*height: 100vh;*/
-  box-sizing: border-box;
-  /*border: 1px solid red;*/
-}
-
 .p515 {
   padding: 5px 15px;
+}
+.p015{
+  padding: 0 15px;
 }
 
 .cover-con{
   height: 200px;
-  background-color: #eee;
+  box-sizing: border-box;
+  margin: 15px 0;
 }
 
 .time-con {
@@ -19,7 +17,6 @@
   align-items: center;
   justify-content: space-between;
   font-size: 0.8rem;
-  /*margin-bottom: 15px;*/
 }
 .time-item {flex: 1;}
 .time-md,
@@ -30,12 +27,10 @@
   justify-content: center;
 }
 .time-md {
+  font-size: 0.9rem;
   box-shadow: 0 0 5px 1px #d8d8d8;
 }
 .time-md view {text-align: center;}
-.time-m {
-  font-size: 0.9rem;
-}
 .time-cn {
   width: 100%;
   color: #999;
@@ -50,6 +45,6 @@ swiper {
   position: fixed;
   top: 0;
   z-index:99;
-  width:calc(100% - 15px);
+  width: 100%;
   background-color:#fff;
 }

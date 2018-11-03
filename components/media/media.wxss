@@ -1,6 +1,6 @@
 /* components/media/media.wxss */
 .media-item {
-  margin-bottom: 0.8rem;
+  margin-top: 0.8rem;
   display: flex;
   align-items: center;
   box-sizing: border-box;
@@ -24,8 +24,11 @@
   font-size: 0.8rem;
 }
 .media-title {
-  font-size: 1.1rem;
-  color: #333;
+  font-size: .95rem;
+  color: #555;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .media-level,

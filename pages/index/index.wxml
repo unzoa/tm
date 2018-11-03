@@ -1,4 +1,4 @@
-<view class='index-container'>
+<view>
   <!-- <view class="userinfo">
     <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
     <block wx:else>
@@ -11,16 +11,24 @@
   </view> -->
   <!-- <button bindtap="test">test app func</button> -->
 
-    <!-- shop -->
-    <view>
+    <!-- shop title -->
+    <view class="p015" style="height: {{titleHeight}}px;">
       <text>SHOP TuoMai</text>
     </view>
+
     <!-- cover -->
-    <view class="cover-con">
-      
+    <view class="cover-con p015" style="height: {{coverHeight}}px;">
+      <Cover
+      res="{{coverData}}"
+      height="{{coverHeight}}"
+      paddingLR="30"
+      interval="2000"
+      autoplay=""
+      style="display: block; height: 100%;" />
     </view>
 
-    <view class="{{top > 225 ? 'topnav' : ''}}">
+    <!-- 菜单 -->
+    <view class="{{top > (coverHeight + titleHeight + 30) ? 'topnav' : ''}}">
 
       <view class='time-con p515'>
         <view
@@ -42,9 +50,10 @@
       </view>
     </view>
 
+    <!-- 列表 -->
     <swiper
-    class="p515"
-    style="padding-top: {{top > 225 ? (timeItemH + 10 + 'px') : 0}}; height: {{mediaRes[swiperItem].length * 4.9 + 'rem'}}"
+    class="p015"
+    style="padding-top: {{top > (coverHeight + titleHeight + 30) ? (timeItemH + 10 + 'px') : 0}}; height: {{mediaRes[swiperItem].length * 4.9 + 'rem'}}"
     bindchange="swiperChange">
         <block
         wx:for="{{mediaRes}}"
@@ -52,7 +61,6 @@
         wx:for-index="j"
         wx:key="j">
           <swiper-item style="height: {{i.length * 4.9 + 'rem'}}">
-            <!-- <text>{{top}}</text> -->
             <Media res="{{i}}" path="index" />
           </swiper-item>
         </block>

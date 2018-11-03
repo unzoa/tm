@@ -8,139 +8,28 @@ Page({
     userInfo: {},
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
-    navH: 0,
+    titleHeight: 25,
+    coverHeight: 150,
+    coverData: [
+      {
+        img: '/img/aa.jpg',
+        w: 0,
+        h: 0
+      },
+      {
+        img: '/img/bb.jpg',
+        w: 0,
+        h: 0
+      } 
+    ],
     timeItemH: 0,
     timeData: [],
-    mediaRes: [
-      [{
-        id: 11,
-        img: '/img/img.png',
-        title: 'this is title11',
-        level: '1',
-        time: '12:30-13:20',
-        status: 1
-      }, {
-        id: 12,
-        img: '/img/img.png',
-        title: 'this is title12',
-        level: '2',
-        time: '13:30-15:20',
-        status: 2
-      }, {
-        id: 13,
-        img: '/img/img.png',
-        title: 'this is title13',
-        level: '2',
-        time: '13:30-15:20',
-        status: 2
-      }, {
-        id: 14,
-        img: '/img/img.png',
-        title: 'this is title14',
-        level: '2',
-        time: '13:30-15:20',
-        status: 2
-      }, {
-        id: 15,
-        img: '/img/img.png',
-        title: 'this is title15',
-        level: '2',
-        time: '13:30-15:20',
-        status: 2
-      }, {
-        id: 16,
-        img: '/img/img.png',
-        title: 'this is title16',
-        level: '2',
-        time: '13:30-15:20',
-        status: 2
-      }, {
-        id: 17,
-        img: '/img/img.png',
-        title: 'this is title17',
-        level: '2',
-        time: '13:30-15:20',
-        status: 2
-      }, {
-        id: 18,
-        img: '/img/img.png',
-        title: 'this is title18',
-        level: '2',
-        time: '13:30-15:20',
-        status: 2
-      }, {
-        id: 19,
-        img: '/img/img.png',
-        title: 'this is title19',
-        level: '2',
-        time: '13:30-15:20',
-        status: 2
-      }],
-      [{
-        id: 21,
-        img: '/img/img.png',
-        title: 'this is title21',
-        level: '2',
-        time: '12:30-13:20',
-        status: 1
-      }, {
-        id: 22,
-        img: '/img/img.png',
-        title: 'this is title22',
-        level: '3',
-        time: '13:30-15:20',
-        status: 2
-      }],
-      [{
-        id: 31,
-        img: '/img/img.png',
-        title: 'this is title31',
-        level: '3',
-        time: '12:30-13:20',
-        status: 1
-      }, {
-        id: 32,
-        img: '/img/img.png',
-        title: 'this is title32',
-        level: '4',
-        time: '13:30-15:20',
-        status: 2
-      }],
-      [{
-        id: 41,
-        img: '/img/img.png',
-        title: 'this is title41',
-        level: '4',
-        time: '12:30-13:20',
-        status: 1
-      }, {
-        id: 42,
-        img: '/img/img.png',
-        title: 'this is title42',
-        level: '5',
-        time: '13:30-15:20',
-        status: 2
-      }],
-      [{
-        id: 51,
-        img: '/img/img.png',
-        title: 'this is title51',
-        level: '5',
-        time: '12:30-13:20',
-        status: 1
-      }, {
-        id: 52,
-        img: '/img/img.png',
-        title: 'this is title52',
-        level: '1',
-        time: '13:30-15:20',
-        status: 2
-      }]
-    ],
+    mediaRes: [],
     top: 0,
     swiperItem: 0
   },
   //事件处理函数
+  // 列表swiper
   swiperChange (e) {
     let time = this.data.timeData
     for (let i = 0; i < time.length; i++) {
@@ -161,37 +50,14 @@ Page({
       return m
     }
     const dayCn = (day) => {
-      let cn = '一'
-      switch (Number(day)) {
-        case 1:
-          cn = '一'
-          break
-        case 2:
-          cn = '二'
-          break
-        case 3:
-          cn = '三'
-          break
-        case 4:
-          cn = '四'
-          break
-        case 5:
-          cn = '五'
-          break
-        case 6:
-          cn = '六'
-          break
-        case 0:
-          cn = '日'
-          break
-      }
-      return cn
+      let zhou = ['日', '一', '二', '三', '四', '五', '六']
+      return zhou[day]
     }
     const dayCnFormat = (day, today) => {
       if (day === 0) {
         return '今天'
       } else {
-        return '星期' + today
+        return '周' + today
       }
     }
     const getDay = (day) => {
@@ -215,6 +81,11 @@ Page({
     }
     timeData[0].showMD = true
     return timeData
+  },
+  onPageScroll:function(e){
+    this.setData({
+      top: e.scrollTop
+    })
   },
   onLoad: function () {
     if (app.globalData.userInfo) {
@@ -243,11 +114,29 @@ Page({
         }
       })
     }
-    // 设置数据
+    /*
+    @ 数据
+    */
+    let mediaRes = []
+    let mediaResItem = [10, 5, 7, 6, 4]
+    for (let i = 0; i < 5; i++) {
+      let mediaResItemRes = []
+      for (let j = 0; j < mediaResItem[i]; j++) {
+        mediaResItemRes.push({
+          id: Number(String(i + 1) + String(j)),
+          img: '/img/img.png',
+          title: '拓脉-教练 ' + i + j,
+          level: String(Math.floor(Math.random() * 5 + 1)),
+          time: '13:30-15:20',
+          status: 2
+        })
+      }
+      mediaRes.push(mediaResItemRes)
+    }
     this.setData({
-      navH: app.globalData.navHeight,
       timeItemH: (wx.getSystemInfoSync().windowWidth - 30) / 5,
-      timeData: this.getTime()
+      timeData: this.getTime(),
+      mediaRes: mediaRes
     })
   },
   onShareAppMessage: function (res) {
@@ -256,7 +145,7 @@ Page({
       console.log(res.target)
     }
     return {
-      title: '标题栏目可以自定义了',
+      title: 'Welcome to the SHOP TuoMai',
       path: '/pages/index/index'
     }
   },
@@ -272,11 +161,6 @@ Page({
     // setTimeout(() => {
     //   wx.stopPullDownRefresh()
     // }, 2000)
-  },
-  onPageScroll:function(e){
-    this.setData({
-      top: e.scrollTop
-    })
   },
   getUserInfo: function(e) {
     console.log(e)

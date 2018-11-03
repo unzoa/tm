@@ -1,0 +1,19 @@
+<swiper
+autoplay="{{autoplay}}"
+interval="{{interval}}">
+  <block
+  wx:for="{{res}}"
+  wx:for-item="i"
+  wx:for-index="j"
+  wx:key="j">
+    <swiper-item>
+      <image
+      mode="aspectFit"
+      lazy-load
+      bindload="imageLoad"
+      data-id='{{j}}'
+      style="width: {{i.w}}px; height: {{i.h}}px;"
+      src="{{i.img}}" />
+    </swiper-item>
+  </block>
+</swiper>
