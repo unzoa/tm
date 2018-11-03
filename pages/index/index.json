@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "Media": "/components/media/media"
+  },
+  "enablePullDownRefresh": false
+}

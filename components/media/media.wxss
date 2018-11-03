@@ -1,0 +1,47 @@
+/* components/media/media.wxss */
+.media-item {
+  margin-bottom: 0.8rem;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.media-cover {
+  width: 4.1rem;
+}
+.media-cover image{
+  display: block;
+  width: 4.1rem;
+  height: 4.1rem;
+  background-color: #eeeeee;
+}
+
+.media-content {
+  width: calc(100% - 4.1rem);
+  box-sizing: border-box;
+  padding-left: 7px;
+  color: #999;
+  font-size: 0.8rem;
+}
+.media-title {
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.media-level,
+.media-foot{
+  display: flex;
+  align-items: center;
+}
+.media-level text {
+  margin-right: 3px;
+}
+.media-level image {
+  width: 0.8rem;
+  height: 0.8rem;
+  margin-right: 3px;
+}
+
+.media-foot {
+  justify-content: space-between
+}

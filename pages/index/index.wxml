@@ -1,0 +1,61 @@
+<view class='index-container'>
+  <!-- <view class="userinfo">
+    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
+    <block wx:else>
+      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+    </block>
+  </view>
+  <view class="usermotto">
+    <text class="user-motto">{{motto}}</text>
+  </view> -->
+  <!-- <button bindtap="test">test app func</button> -->
+
+    <!-- shop -->
+    <view>
+      <text>SHOP TuoMai</text>
+    </view>
+    <!-- cover -->
+    <view class="cover-con">
+      
+    </view>
+
+    <view class="{{top > 225 ? 'topnav' : ''}}">
+
+      <view class='time-con p515'>
+        <view
+        wx:for="{{timeData}}"
+        wx:for-item="i"
+        wx:for-index="j"
+        wx:key="j"
+        data-id="{{i.id}}"
+        class="time-item"
+        style="height: {{timeItemH + 'px'}}">
+          <view wx:if="{{i.showMD}}" class="time-md">
+            <view>
+              <view class="time-m">{{i.month}}</view>
+              <view class="time-d">{{i.day}}</view>
+            </view>
+          </view>
+          <view wx:else class="time-cn">{{i.cn}}</view>
+        </view>
+      </view>
+    </view>
+
+    <swiper
+    class="p515"
+    style="padding-top: {{top > 225 ? (timeItemH + 10 + 'px') : 0}}; height: {{mediaRes[swiperItem].length * 4.9 + 'rem'}}"
+    bindchange="swiperChange">
+        <block
+        wx:for="{{mediaRes}}"
+        wx:for-item="i"
+        wx:for-index="j"
+        wx:key="j">
+          <swiper-item style="height: {{i.length * 4.9 + 'rem'}}">
+            <!-- <text>{{top}}</text> -->
+            <Media res="{{i}}" path="index" />
+          </swiper-item>
+        </block>
+    </swiper>
+
+</view>
