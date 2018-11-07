@@ -1,16 +1,4 @@
 <view>
-  <!-- <view class="userinfo">
-    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-    <block wx:else>
-      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-    </block>
-  </view>
-  <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
-  </view> -->
-  <!-- <button bindtap="test">test app func</button> -->
-
     <!-- shop title -->
     <view class="p015" style="height: {{titleHeight}}px;">
       <text>SHOP TuoMai</text>
@@ -61,7 +49,7 @@
         wx:for-index="j"
         wx:key="j">
           <swiper-item style="height: {{i.length * 4.9 + 'rem'}}">
-            <Media res="{{i}}" path="index" />
+            <Media res="{{i}}" jumpTo="project"/>
           </swiper-item>
         </block>
     </swiper>

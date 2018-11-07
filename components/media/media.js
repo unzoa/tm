@@ -5,7 +5,7 @@ Component({
    */
   properties: {
     res: Array,
-    path: String
+    jumpTo: String
   },
 
   /**
@@ -20,7 +20,9 @@ Component({
   methods: {
     checkThis (e) {
       let data = e.currentTarget.dataset
-      console.log(data.id, this.data.path)
+      wx.navigateTo({
+        url: '/pages/' + this.data.jumpTo + '/' + this.data.jumpTo + '?id=' + data.id 
+      })
     }
   }
 })

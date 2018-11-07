@@ -1,0 +1,34 @@
+<view style="text-align: {{userInfo.nickName}} ? 'left' : 'center'">
+  <button
+    class="get-user"
+    wx:if="{{!hasUserInfo && canIUse}}"
+    open-type="getUserInfo"
+    bindgetuserinfo="getUserInfo"> 获取头像 </button>
+  <view wx:if="{{userInfo.nickName}}">
+    <!-- userName -->
+    <view class="user-name-con p015">
+      <view class="user-name">
+        {{userInfo.nickName}}
+      </view>
+      <view class="user-id">
+        ID：
+        <!-- {{userId}} -->
+        <!-- <open-data type="open-gid"></open-data> -->
+      </view>
+    </view>
+    <!-- menuList -->
+    <view class="menu-list-con p015">
+      <view bingtap="jumpTop" data-path="bookList">预约记录</view>
+      <view bingtap="jumpTop" data-path="help">帮助</view>
+    </view>
+    <!-- account -->
+    <view class="account-con">
+      <view>账户余额：</view>
+      <view
+      wx:for="{{accountList}}"
+      wx:for-item="i"
+      wx:for-index="j"
+      wx:key="j">{{i}}</view>
+    </view>
+  </view>
+</view>

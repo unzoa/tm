@@ -125,7 +125,7 @@ Page({
         mediaResItemRes.push({
           id: Number(String(i + 1) + String(j)),
           img: '/img/img.png',
-          title: '拓脉-教练 ' + i + j,
+          title: '拓脉-训练 ' + i + j,
           level: String(Math.floor(Math.random() * 5 + 1)),
           time: '13:30-15:20',
           status: 2
@@ -161,13 +161,5 @@ Page({
     // setTimeout(() => {
     //   wx.stopPullDownRefresh()
     // }, 2000)
-  },
-  getUserInfo: function(e) {
-    console.log(e)
-    app.globalData.userInfo = e.detail.userInfo
-    this.setData({
-      userInfo: e.detail.userInfo,
-      hasUserInfo: true
-    })
   }
 })

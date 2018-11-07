@@ -7,3 +7,10 @@
   justify-content: space-between;
   box-sizing: border-box;
 } 
+
+.p515 {
+  padding: 5px 15px;
+}
+.p015{
+  padding: 0 15px;
+}

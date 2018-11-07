@@ -1,0 +1,55 @@
+.cover-con {
+  margin: 15px 0;
+}
+
+.project-intro {
+  font-size: .8rem;
+  color: #666;
+}
+.project-intro-item {
+  display: flex;
+  line-height: 1.3rem;
+}
+.checkPlace {
+  text-decoration: underline;
+  color: #333;
+}
+
+.project-intro-booked-headImgs {
+  overflow-x: scroll;
+  margin: 1rem 0;
+}
+.project-intro-booked-headImgs view {
+  box-sizing: border-box;
+  padding-left: 15px;
+  white-space: nowrap;
+  font-size: 0;
+}
+.project-intro-booked-headImgs image {
+  display: inline-block;
+  height: 3rem;
+  width: 3rem;
+  border-radius: 3rem;
+  margin-right: 1rem;
+  background-color: #eee;
+}
+
+.project-intro-level {
+  width: calc(100% - 30px);
+  margin-left: 15px;
+  box-sizing: border-box;
+  padding-left: 7px;
+  border: 2px solid #333;
+  line-height: 1.7rem;
+  background-color: #eee;
+  color: #333;
+}
+.project-intro-level image {
+  height: .8rem;
+  width: .8rem;
+  margin-right: 3px;
+}
+
+.content-con {
+  margin: 1rem 0;
+}

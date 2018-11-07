@@ -1,7 +1,8 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/logs/logs"
+    "pages/project/project",
+    "pages/me/me"
   ],
   "window": {
     "backgroundTextStyle": "dark",
@@ -19,7 +20,7 @@
         "text": "课程"
       },
       {
-        "pagePath": "pages/logs/logs",
+        "pagePath": "pages/me/me",
         "text": "我的"
       }
     ]

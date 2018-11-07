@@ -1,0 +1,91 @@
+<view>
+  <!-- title -->
+  <view class="prject-title p015">
+    <text>{{res.title}}</text>
+  </view>
+
+  <!-- cover -->
+  <view class="cover-con p015" style="height: {{coverHeight}}px;">
+    <Cover
+    res="{{res.coverData}}"
+    height="{{coverHeight}}"
+    paddingLR="30"
+    interval="2000"
+    autoplay=""
+    style="display: block; height: 100%;" />
+  </view>
+
+  <!-- intro -->
+  <view class="project-intro">
+
+    <!-- coach -->
+    <view class="project-intro-item p015">
+      <view>教练：</view>
+      <view>{{res.coach}}</view>
+    </view>
+
+    <!-- time -->
+    <view class="project-intro-item p015">
+      <view>时间：</view>
+      <view>{{res.time}}</view>
+    </view>
+
+    <!-- place -->
+    <view class="project-intro-item p015">
+      <view>地点：</view>
+      <view class="project-intro-place-name">
+        <view>{{res.placeName}}</view>
+        <view
+        class="checkPlace"
+        bindtap="checkPlace"
+        data-lat="{{res.placeLatitude}}"
+        data-lon="{{res.placeLongitude}}">查看地址</view>  
+      </view>
+    </view>
+
+    <!-- already booked -->
+      <!-- title -->
+      <view class="project-intro-item p015">
+        <view>已经预约：</view>
+        <view>{{res.booked.has}}人 (上限{{res.booked.max}}人)</view>
+      </view>
+      <!-- headImgs -->
+      <view class="project-intro-booked-headImgs">
+        <view>
+          <image
+          wx:for="{{[1,2,3,4,5,6,7,8]}}"
+          wx:for-index="n"
+          wx:for-item="m"
+          wx:key="n"
+          src="{{res.booked.headImg}}">
+          </image>
+        </view>
+      </view>
+
+    <!-- level -->
+    <view class="project-intro-level">
+      课程难度：
+      <image
+      wx:for="{{[1, 2, 3, 4, 5]}}"
+      wx:for-index="n"
+      wx:for-item="m"
+      wx:key="n"
+      wx:if="{{m <= res.level}}"
+      src="/img/star.png"></image>
+      (适合{{res.levelFit}}健身者)
+    </view>
+
+  </view>
+
+  <!-- content -->
+  <view class="content-con p015">
+    <!-- title -->
+    <view class="content-title">
+      <text>课程描述</text>
+    </view>
+    <!-- rich-text -->
+    <view class="content-rich-text">
+      <rich-text nodes="{{res.content}}"></rich-text>
+    </view>
+  </view>
+</view>
