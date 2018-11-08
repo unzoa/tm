@@ -1,0 +1,2 @@
+/* pages/bookList/bookList.wxss */
+.book-list-title {font-size: 1.5rem;}

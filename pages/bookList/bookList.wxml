@@ -1,0 +1,4 @@
+<view class="book-list p515">
+  <text class="book-list-title">预约记录</text>
+  <Media res="{{mediaRes}}" jumpTo="bookSuccess" />
+</view>

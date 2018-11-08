@@ -1,0 +1,38 @@
+<view class="book-success p515">
+  <text>预约成功</text>
+
+  <view class="info-class-list-con">
+    <view class="info-list-item">课程名字：{{res.name}}</view>
+    <view class="info-list-item">
+      课程难度：
+      <image
+        wx:for="{{[1, 2, 3, 4, 5]}}"
+        wx:for-index="n"
+        wx:for-item="m"
+        wx:key="n"
+        wx:if="{{m <= res.level}}"
+        src="/img/star.png"></image>
+    </view>
+    <view class="info-list-item">上课场馆：{{res.place}}</view>
+    <view class="info-list-item">上课教练：{{res.coach}}</view>
+    <view class="info-list-item">上课时间：{{res.time}}</view>
+  </view>
+
+  <view class="info-book-list-con">
+    <view class="info-list-item">预约号：{{res.bookNum}}</view>
+    <view class="info-list-item">预约状态：</view>
+    <view class="info-list-item">
+      {{res.bookStatus}}预约成功。
+    </view>
+  </view>
+
+  <view class="positionBottom btn btn-block" bindtap="cancelShow">取消预约</view>
+
+  <view class="cancel-book-overlay" wx:if="{{cancelShow}}">
+    <view class="cancel-option-con">
+      <view class="warn-text">取消后名额将不保留，确定取消预约？</view>
+      <view class="btn btn-block" bindtap="cancelBook" bind-b="true">确定</view>
+      <view class="btn btn-white" bindtap="cancelBook" bind-b="false">取消</view>
+    </view>
+  </view>
+</view>

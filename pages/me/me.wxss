@@ -29,5 +29,5 @@
   text-align: center;
   font-size: .6rem;
   line-height: 1rem;
-  color: #999
+  color: #999;
 }

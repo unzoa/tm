@@ -25,6 +25,12 @@ Page({
       hasUserInfo: true
     })
   },
+  jumpTo (e) {
+    let data = e.currentTarget.dataset
+    wx.navigateTo({
+      url: '/pages/' + data.path + '/' + data.path
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */

@@ -88,6 +88,9 @@ Page({
     })
   },
   onLoad: function () {
+    wx.navigateTo({
+      url: '/pages/bookList/bookList' 
+    })
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,

@@ -2,7 +2,10 @@
   "pages": [
     "pages/index/index",
     "pages/project/project",
-    "pages/me/me"
+    "pages/me/me",
+    "pages/bookList/bookList",
+    "pages/bookSuccess/bookSuccess",
+    "pages/help/help"
   ],
   "window": {
     "backgroundTextStyle": "dark",

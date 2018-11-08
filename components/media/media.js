@@ -20,9 +20,11 @@ Component({
   methods: {
     checkThis (e) {
       let data = e.currentTarget.dataset
-      wx.navigateTo({
-        url: '/pages/' + this.data.jumpTo + '/' + this.data.jumpTo + '?id=' + data.id 
-      })
+      if (this.data.jumpTo !== '/') {
+        wx.navigateTo({
+          url: '/pages/' + this.data.jumpTo + '/' + this.data.jumpTo + '?id=' + data.id 
+        })
+      }
     }
   }
 })

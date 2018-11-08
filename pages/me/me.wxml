@@ -18,8 +18,8 @@
     </view>
     <!-- menuList -->
     <view class="menu-list-con p015">
-      <view bingtap="jumpTop" data-path="bookList">预约记录</view>
-      <view bingtap="jumpTop" data-path="help">帮助</view>
+      <view bindtap="jumpTo" data-path="bookList">预约记录</view>
+      <view bindtap="jumpTo" data-path="help">帮助</view>
     </view>
     <!-- account -->
     <view class="account-con">
