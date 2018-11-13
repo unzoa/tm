@@ -24,6 +24,7 @@ Page({
     ],
     timeItemH: 0,
     timeData: [],
+    menuListIndex: 0,
     mediaRes: [],
     top: 0,
     swiperItem: 0
@@ -39,6 +40,12 @@ Page({
     this.setData({
       timeData: time,
       swiperItem: e.detail.current
+    })
+  },
+  changeMenu (e) {
+    let data = e.currentTarget.dataset
+    this.setData({
+      menuListIndex: data.index
     })
   },
   getTime () {
@@ -88,9 +95,9 @@ Page({
     })
   },
   onLoad: function () {
-    wx.navigateTo({
-      url: '/pages/bookList/bookList' 
-    })
+    // wx.navigateTo({
+    //   url: '/pages/bookList/bookList' 
+    // })
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,

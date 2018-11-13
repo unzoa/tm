@@ -24,6 +24,8 @@
         wx:for-item="i"
         wx:for-index="j"
         wx:key="j"
+        bindtap="changeMenu"
+        data-index="{{j}}"
         data-id="{{i.id}}"
         class="time-item"
         style="height: {{timeItemH + 'px'}}">
@@ -42,7 +44,8 @@
     <swiper
     class="p015"
     style="padding-top: {{top > (coverHeight + titleHeight + 30) ? (timeItemH + 10 + 'px') : 0}}; height: {{mediaRes[swiperItem].length * 4.9 + 'rem'}}"
-    bindchange="swiperChange">
+    bindchange="swiperChange"
+    current="{{menuListIndex}}">
         <block
         wx:for="{{mediaRes}}"
         wx:for-item="i"
