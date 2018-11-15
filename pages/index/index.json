@@ -1,7 +1,8 @@
 {
   "usingComponents": {
     "Media": "/components/media/media",
-    "Cover": "/components/cover/cover"
+    "Cover": "/components/cover/cover",
+    "Message": "/components/message/message"
   },
   "enablePullDownRefresh": true
 }

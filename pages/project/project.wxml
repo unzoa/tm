@@ -88,4 +88,6 @@
       <rich-text nodes="{{res.content}}"></rich-text>
     </view>
   </view>
+
+  <!-- already -->
 </view>

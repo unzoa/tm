@@ -1,6 +1,9 @@
 <view>
+    <Message id="message" mes="hello world!">
+      <text slot="haha">ahsdkasdlal</text>
+    </Message>
     <!-- shop title -->
-    <view class="p015" style="height: {{titleHeight}}px;">
+    <view class="p015" style="height: {{titleHeight}}px;" bindtap="messageShow">
       <text>SHOP TuoMai</text>
     </view>
 

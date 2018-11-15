@@ -4,7 +4,7 @@ const app = getApp()
 
 Page({
   data: {
-    motto: 'Hello World',
+    motto: '',
     userInfo: {},
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
@@ -94,10 +94,14 @@ Page({
       top: e.scrollTop
     })
   },
+  messageShow () {
+    this.selectComponent('#message').show()
+  },
   onLoad: function () {
     // wx.navigateTo({
     //   url: '/pages/bookList/bookList' 
     // })
+
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
@@ -143,11 +147,35 @@ Page({
       }
       mediaRes.push(mediaResItemRes)
     }
+
     this.setData({
       timeItemH: (wx.getSystemInfoSync().windowWidth - 30) / 5,
       timeData: this.getTime(),
       mediaRes: mediaRes
     })
+
+    // 测试http
+    // let _this = this
+    // wx.request({
+    //   url: 'http://120.55.189.53:8018/api/GetVideoList', //仅为示例，并非真实的接口地址
+    //   data: {
+    //     where: 1,
+    //     pageindex: 1,
+    //     pagesize: 1,
+    //     ispage: false,
+    //     ScenicsAreaId: 4
+    //   },
+    //   header: {
+    //     'content-type': 'application/x-www-form-urlencoded', // 默认值
+    //     'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwianRpIjoiMDQzNzNkNTYtZTZjYi00ZmVjLTk4OTQtZDVlZjkyMDkwNGE2IiwibmJmIjoxNTQyMTE5MDQyLCJleHAiOjE1NDIyMDU0NDIsImlzcyI6IlBpbGlwYUFwaUdhdGV3YXkiLCJhdWQiOiJFUlAifQ.g3TO-Snm-7nO6yApzp4R-hJQItS3gm9bjsdhPA2FNe0'
+    //   },
+    //   success(res) {
+    //     console.log(res.data)
+    //     _this.setData({
+    //       motto: res.data
+    //     })
+    //   }
+    // })
   },
   onShareAppMessage: function (res) {
     if (res.from === 'button') {
