@@ -2,9 +2,15 @@
     <Message id="message" mes="hello world!">
       <text slot="haha">ahsdkasdlal</text>
     </Message>
+
     <!-- shop title -->
     <view class="p015" style="height: {{titleHeight}}px;" bindtap="messageShow">
       <text>SHOP TuoMai</text>
+      <!-- <picker bindchange="bindPickerChange" value="{{shopIndex}}" range="{{shopArr}}">
+        <view class="picker">
+          {{shopArr[shopIndex]}}
+        </view>
+      </picker> -->
     </view>
 
     <!-- cover -->

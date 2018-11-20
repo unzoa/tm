@@ -4,6 +4,8 @@ const app = getApp()
 
 Page({
   data: {
+    shopArr: ['店铺 NO.1', '店铺 NO.2', '店铺 NO.3', '店铺 NO.4'],
+    shopIndex: 0,
     motto: '',
     userInfo: {},
     hasUserInfo: false,
@@ -29,7 +31,14 @@ Page({
     top: 0,
     swiperItem: 0
   },
-  //事件处理函数
+  // 事件处理函数
+  // 测试选择器
+  bindPickerChange: function (e) {
+    // console.log('picker发送选择改变，携带值为', e.detail.value)
+    this.setData({
+      shopIndex: e.detail.value
+    })
+  },
   // 列表swiper
   swiperChange (e) {
     let time = this.data.timeData
@@ -97,6 +106,16 @@ Page({
   messageShow () {
     this.selectComponent('#message').show()
   },
+  getData () {
+    app.$('venuelist', {
+      where: 1,
+      pageindex: 1,
+      pagesize: 1,
+      ispage: false
+    }).then(res => {
+      console.log(res)
+    })
+  },
   onLoad: function () {
     // wx.navigateTo({
     //   url: '/pages/bookList/bookList' 
@@ -111,6 +130,7 @@ Page({
       // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
       // 所以此处加入 callback 以防止这种情况
       app.userInfoReadyCallback = res => {
+        app.getToken(res.userInfo.avatarUrl, res.userInfo.nickName, res.userInfo.gender)
         this.setData({
           userInfo: res.userInfo,
           hasUserInfo: true
@@ -120,6 +140,7 @@ Page({
       // 在没有 open-type=getUserInfo 版本的兼容处理
       wx.getUserInfo({
         success: res => {
+          app.getToken(res.userInfo.avatarUrl, res.userInfo.nickName, res.userInfo.gender)
           app.globalData.userInfo = res.userInfo
           this.setData({
             userInfo: res.userInfo,
@@ -131,6 +152,15 @@ Page({
     /*
     @ 数据
     */
+    // 由于是网络请求，可能会在 Page.onLoad 之后才返回
+    // 所以此处加入 callback 以防止这种情况
+    if (Boolean(app.token)) {
+      this.getData()
+    } else {
+      app.tokenCallback = token => {
+        this.getData()
+      }
+    }
     let mediaRes = []
     let mediaResItem = [10, 5, 7, 6, 4]
     for (let i = 0; i < 5; i++) {
@@ -154,28 +184,6 @@ Page({
       mediaRes: mediaRes
     })
 
-    // 测试http
-    // let _this = this
-    // wx.request({
-    //   url: 'http://120.55.189.53:8018/api/GetVideoList', //仅为示例，并非真实的接口地址
-    //   data: {
-    //     where: 1,
-    //     pageindex: 1,
-    //     pagesize: 1,
-    //     ispage: false,
-    //     ScenicsAreaId: 4
-    //   },
-    //   header: {
-    //     'content-type': 'application/x-www-form-urlencoded', // 默认值
-    //     'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwianRpIjoiMDQzNzNkNTYtZTZjYi00ZmVjLTk4OTQtZDVlZjkyMDkwNGE2IiwibmJmIjoxNTQyMTE5MDQyLCJleHAiOjE1NDIyMDU0NDIsImlzcyI6IlBpbGlwYUFwaUdhdGV3YXkiLCJhdWQiOiJFUlAifQ.g3TO-Snm-7nO6yApzp4R-hJQItS3gm9bjsdhPA2FNe0'
-    //   },
-    //   success(res) {
-    //     console.log(res.data)
-    //     _this.setData({
-    //       motto: res.data
-    //     })
-    //   }
-    // })
   },
   onShareAppMessage: function (res) {
     if (res.from === 'button') {
