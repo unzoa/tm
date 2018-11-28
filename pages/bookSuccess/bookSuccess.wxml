@@ -20,9 +20,9 @@
 
   <view class="info-book-list-con">
     <view class="info-list-item">预约号：{{res.bookNum}}</view>
-    <view class="info-list-item">预约状态：</view>
+    <view class="info-list-item">预约状态：{{res.bookStatus}}</view>
     <view class="info-list-item">
-      {{res.bookStatus}}预约成功。
+      {{res.bookTime}}
     </view>
   </view>
 
@@ -31,8 +31,9 @@
   <view class="cancel-book-overlay" wx:if="{{cancelShow}}">
     <view class="cancel-option-con">
       <view class="warn-text">取消后名额将不保留，确定取消预约？</view>
-      <view class="btn btn-block" bindtap="cancelBook" bind-b="true">确定</view>
-      <view class="btn btn-white" bindtap="cancelBook" bind-b="false">取消</view>
+      <view class="btn btn-block" bindtap="cancelBook" data-b="true">确定</view>
+      <view class="btn btn-white" bindtap="cancelBook" data-b="false">取消</view>
     </view>
   </view>
 </view>
+<Message id="message" mes="{{msg}}"></Message>

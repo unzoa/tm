@@ -1,5 +1,8 @@
 {
   "usingComponents": {
-    "Cover": "/components/cover/cover"
-  }
+    "Cover": "/components/cover/cover",
+    "Dialog": "/components/dialog/dialog",
+    "Message": "/components/message/message"
+  },
+  "enablePullDownRefresh": true
 }

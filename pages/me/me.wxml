@@ -11,9 +11,7 @@
         {{userInfo.nickName}}
       </view>
       <view class="user-id">
-        ID：
-        <!-- {{userId}} -->
-        <!-- <open-data type="open-gid"></open-data> -->
+        ID：{{userId}}
       </view>
     </view>
     <!-- menuList -->

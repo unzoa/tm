@@ -1,1 +1,8 @@
-<view class="dialog"></view>
+<view class="dialog {{act}}">
+  <view class="dialog-bg" bindtap="hide"></view>
+  <view class="dialog-outter">
+    <slot name="dialog-title"></slot>
+    <slot name="dialog-inner"></slot>
+  </view>
+  <view class="dislog-close" bindtap="hide">x</view>
+</view>

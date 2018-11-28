@@ -8,7 +8,8 @@ Component({
     height: Number,
     paddingLR: Number,
     autoplay: Boolean,
-    interval: Number
+    interval: Number,
+    current: Number
   },
 
   /**

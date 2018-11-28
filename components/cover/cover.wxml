@@ -1,6 +1,7 @@
 <swiper
 autoplay="{{autoplay}}"
 interval="{{interval}}"
+current="{{current}}"
 bindtap="previewImg">
   <block
   wx:for="{{res}}"

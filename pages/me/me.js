@@ -1,6 +1,6 @@
 // pages/me/me.js
 const app = getApp()
-
+const util = require('../../utils/util.js')
 Page({
 
   /**
@@ -10,13 +10,9 @@ Page({
     userInfo: {},
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
-    userName: 'aZH额',
-    userId: 123213,
-    accountList: [
-      '团体课体验券x1. 2018.12.15过期',
-      '团体课16节. 2018.12.20过期',
-      '私教课3节. 2018.12.26过期'
-    ]
+    userName: '',
+    userId: 0,
+    accountList: []
   },
   getUserInfo: function(e) {
     app.globalData.userInfo = e.detail.userInfo
@@ -31,11 +27,28 @@ Page({
       url: '/pages/' + data.path + '/' + data.path
     })
   },
+  getMyMainInfo () {
+    app.$('GetMyMainInfo', {
+      UserId: app.userId
+    }).then(res => {
+      let d = res.data
+      this.setData({
+        accountList: [
+          '团体课体验券x' + d.groupCourseNums + '. ' + util.formatTime(d.groupCourseExpireTime) + '过期',
+          '团体课x' + d.voucherNums + '. ' + util.formatTime(d.voucherExpireTime) + '过期',
+          '私教课x' + d.privateCourseNums + '. ' + util.formatTime(d.privateCourseExpireTime) + '过期'
+        ]
+      })
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(app.globalData.userInfo, this.data.canIUse)
+    this.setData({
+      userId: app.userId
+    })
+    // console.log(app.globalData.userInfo, this.data.canIUse)
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
@@ -62,5 +75,6 @@ Page({
         }
       })
     }
+    this.getMyMainInfo()
   }
 })

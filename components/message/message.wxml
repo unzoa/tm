@@ -1,4 +1,4 @@
-<view class="{{act}} actor-dancer">
+<view class="{{act}} mes-actor-dancer">
   {{mes}}
   <slot name="haha"></slot>
 </view>

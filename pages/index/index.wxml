@@ -1,69 +1,90 @@
 <view>
-    <Message id="message" mes="hello world!">
-      <text slot="haha">ahsdkasdlal</text>
-    </Message>
-
-    <!-- shop title -->
-    <view class="p015" style="height: {{titleHeight}}px;" bindtap="messageShow">
-      <text>SHOP TuoMai</text>
-      <!-- <picker bindchange="bindPickerChange" value="{{shopIndex}}" range="{{shopArr}}">
-        <view class="picker">
-          {{shopArr[shopIndex]}}
-        </view>
-      </picker> -->
+  <!-- shop title -->
+  <view class="p015 index-title-con" style="height: {{titleHeight}}px;">
+    <!-- <text>SHOP TuoMai</text> -->
+    <picker
+    class="piker-index-page"
+    bindchange="bindPickerChange"
+    value="{{shopIndex}}"
+    range="{{shopArr}}"
+    range-key="venueName">
+      <view class="picker">
+        {{shopArr[shopIndex].venueName}}
+      </view>
+    </picker>
+    <view class="scan-con">
+      <image src="../../img/scan.png" bindtap="scancode"/>
     </view>
+  </view>
 
-    <!-- cover -->
-    <view class="cover-con p015" style="height: {{coverHeight}}px;">
-      <Cover
-      res="{{coverData}}"
-      height="{{coverHeight}}"
-      paddingLR="30"
-      interval="2000"
-      autoplay=""
-      style="display: block; height: 100%;" />
-    </view>
+  <!-- cover -->
+  <view class="cover-con p015" style="height: {{coverHeight}}px;">
+    <Cover
+    res="{{coverData}}"
+    height="{{coverHeight}}"
+    paddingLR="30"
+    interval="2000"
+    autoplay="true"
+    style="display: block; height: 100%;" />
+  </view>
 
-    <!-- 菜单 -->
-    <view class="{{top > (coverHeight + titleHeight + 30) ? 'topnav' : ''}}">
+  <!-- 菜单 -->
+  <view class="{{top > (coverHeight + titleHeight + 30) ? 'topnav' : ''}}">
 
-      <view class='time-con p515'>
-        <view
-        wx:for="{{timeData}}"
-        wx:for-item="i"
-        wx:for-index="j"
-        wx:key="j"
-        bindtap="changeMenu"
-        data-index="{{j}}"
-        data-id="{{i.id}}"
-        class="time-item"
-        style="height: {{timeItemH + 'px'}}">
-          <view wx:if="{{i.showMD}}" class="time-md">
-            <view>
-              <view class="time-m">{{i.month}}</view>
-              <view class="time-d">{{i.day}}</view>
-            </view>
+    <view class='time-con p515'>
+      <view
+      wx:for="{{timeData}}"
+      wx:for-item="i"
+      wx:for-index="j"
+      wx:key="j"
+      bindtap="changeMenu"
+      data-index="{{j}}"
+      data-id="{{i.id}}"
+      class="time-item"
+      style="height: {{timeItemH + 'px'}}">
+        <view wx:if="{{i.showMD}}" class="time-md">
+          <view>
+            <view class="time-m">{{i.month}}</view>
+            <view class="time-d">{{i.day}}</view>
           </view>
-          <view wx:else class="time-cn">{{i.cn}}</view>
         </view>
+        <view wx:else class="time-cn">{{i.cn}}</view>
       </view>
     </view>
+  </view>
 
-    <!-- 列表 -->
-    <swiper
-    class="p015"
-    style="padding-top: {{top > (coverHeight + titleHeight + 30) ? (timeItemH + 10 + 'px') : 0}}; height: {{mediaRes[swiperItem].length * 4.9 + 'rem'}}"
-    bindchange="swiperChange"
-    current="{{menuListIndex}}">
-        <block
-        wx:for="{{mediaRes}}"
-        wx:for-item="i"
-        wx:for-index="j"
-        wx:key="j">
-          <swiper-item style="height: {{i.length * 4.9 + 'rem'}}">
-            <Media res="{{i}}" jumpTo="project"/>
-          </swiper-item>
-        </block>
-    </swiper>
+  <!-- 列表 -->
+  <swiper
+  class="p015"
+  style="padding-top: {{top > (coverHeight + titleHeight + 30) ? (timeItemH + 10 + 'px') : 0}}; height: {{mediaRes[swiperItem].length * 4.9 + 'rem'}};"
+  bindchange="swiperChange"
+  current="{{menuListIndex}}">
+    <block
+    wx:for="{{mediaRes}}"
+    wx:for-item="i"
+    wx:for-index="j"
+    wx:key="j">
+      <swiper-item style="height: {{i.length * 4.9 + 'rem'}}">
+        <Media res="{{i}}" jumpTo="project"/>
+      </swiper-item>
+    </block>
+  </swiper>
 
+  <!-- 没有课程时候显示提示 -->
+  <view
+    wx:for="{{mediaRes}}"
+    wx:for-item="i"
+    wx:for-index="j"
+    wx:key="j">
+    <view
+    wx:if="{{i.length === 0 && swiperItem === j}}"
+    class="none-class">
+      {{timeData[j].month}} 还没有课程
+    </view>
+  </view>
 </view>
+<!-- loading Ad -->
+<view wx:if="{{hideAd}}" class="ad-con">
+  <image src="/img/aa.jpg" mode="aspectFill"></image>
+</view>
+

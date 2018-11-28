@@ -7,6 +7,7 @@ Component({
     multipleSlots: true // 在组件定义时的选项中启用多slot支持
   },
   properties: {
+    act: String,
     mes: String
   },
 
@@ -14,7 +15,7 @@ Component({
    * 组件的初始数据
    */
   data: {
-    act: ''
+    // act: ''
   },
 
   /**
@@ -23,11 +24,11 @@ Component({
   methods: {
     show () {
       this.setData({
-        act: 'act-in'
+        act: 'mes-act-in'
       })
       setTimeout(() => {
         this.setData({
-          act: 'act-out'
+          act: 'mes-act-out'
         })
       }, 3000)
     }

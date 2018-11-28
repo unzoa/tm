@@ -4,7 +4,9 @@ const app = getApp()
 
 Page({
   data: {
-    shopArr: ['店铺 NO.1', '店铺 NO.2', '店铺 NO.3', '店铺 NO.4'],
+    hideAd: true,
+    act: '',
+    shopArr: [],
     shopIndex: 0,
     motto: '',
     userInfo: {},
@@ -27,14 +29,36 @@ Page({
     timeItemH: 0,
     timeData: [],
     menuListIndex: 0,
+    swiperItem: 0,
     mediaRes: [],
-    top: 0,
-    swiperItem: 0
+    top: 0
   },
   // 事件处理函数
+  scancode () {
+    wx.scanCode({
+      success: (res) => {
+        console.log(res)
+        wx.showToast({
+          title: '成功',
+          icon: 'success',
+          duration: 2000
+        })
+      },
+      fail: (res) => {
+        wx.showToast({
+          title: '失败',
+          icon: 'none',
+          duration: 2000
+        })
+      },
+      complete: (res) => {
+      }
+    })
+  },
   // 测试选择器
-  bindPickerChange: function (e) {
+  bindPickerChange (e) {
     // console.log('picker发送选择改变，携带值为', e.detail.value)
+    this.getShopInfo(this.data.shopArr[e.detail.value].id)
     this.setData({
       shopIndex: e.detail.value
     })
@@ -53,6 +77,7 @@ Page({
   },
   changeMenu (e) {
     let data = e.currentTarget.dataset
+    console.log(data.index)
     this.setData({
       menuListIndex: data.index
     })
@@ -103,22 +128,87 @@ Page({
       top: e.scrollTop
     })
   },
-  messageShow () {
-    this.selectComponent('#message').show()
-  },
-  getData () {
+  getShop () {
     app.$('venuelist', {
       where: 1,
       pageindex: 1,
       pagesize: 1,
       ispage: false
     }).then(res => {
-      console.log(res)
+      wx.stopPullDownRefresh()
+      // console.log(res)
+      this.getShopInfo(res.data.venueDataList[0].id)
+      this.setData({
+        shopArr: res.data.venueDataList
+      })
+    }).catch(res => {
+      // alert(JSON.stringify(res))
+    })
+  },
+  getShopInfo (id) {
+    this.setData({
+      mediaRes: [],
+      menuListIndex: 0,
+      swiperItem: 0
+    })
+
+    let hideAd = () => {
+      let _this = this
+      setTimeout(() => {
+        _this.setData({
+          hideAd: false
+        })
+        wx.showTabBar()
+      }, 2000)
+    }
+    app.$('VenueHomeInfo', {
+      VenueId: id
+    }).then(res => {
+      // console.log(res)
+      // 遍历课程
+      if (res.code === 0) {
+        let d = res.data.venueHomeCourseList
+
+        let timeNav = this.getTime()
+        let mediaRes = []
+        
+        timeNav.forEach((m, n) => {
+          let mediaResItemRes = []
+          d.forEach((i, j) => {
+            let weekTime = i.weekTime.split('-')[1] + '.' + i.weekTime.split('-')[2] // (new Date(i.weekTime).getMonth() + 1) + '.' + new Date(i.weekTime).getDate()
+            if (m.month === weekTime) {
+              i.courseList.forEach((x, y) => {
+                mediaResItemRes.push({
+                  id: x.courseId,
+                  img: x.coursePhoto,
+                  title: x.courseName,
+                  level: x.courseLevel,
+                  time: x.teachingTime,
+                  status: app.courseReserve[x.courseReserve]
+                })
+              })
+            }
+          })
+
+          mediaRes.push(mediaResItemRes)
+        })
+        // console.log(mediaRes)
+        this.setData({
+          mediaRes: mediaRes
+        })
+      }
+      hideAd()
+      // 停止下拉状态
+      wx.stopPullDownRefresh()
+    }).catch(error => {
+      hideAd()
+      // 停止下拉状态
+      wx.stopPullDownRefresh()
     })
   },
   onLoad: function () {
     // wx.navigateTo({
-    //   url: '/pages/bookList/bookList' 
+    //   url: '/pages/project/project' 
     // })
 
     if (app.globalData.userInfo) {
@@ -130,7 +220,6 @@ Page({
       // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
       // 所以此处加入 callback 以防止这种情况
       app.userInfoReadyCallback = res => {
-        app.getToken(res.userInfo.avatarUrl, res.userInfo.nickName, res.userInfo.gender)
         this.setData({
           userInfo: res.userInfo,
           hasUserInfo: true
@@ -140,7 +229,6 @@ Page({
       // 在没有 open-type=getUserInfo 版本的兼容处理
       wx.getUserInfo({
         success: res => {
-          app.getToken(res.userInfo.avatarUrl, res.userInfo.nickName, res.userInfo.gender)
           app.globalData.userInfo = res.userInfo
           this.setData({
             userInfo: res.userInfo,
@@ -155,33 +243,16 @@ Page({
     // 由于是网络请求，可能会在 Page.onLoad 之后才返回
     // 所以此处加入 callback 以防止这种情况
     if (Boolean(app.token)) {
-      this.getData()
+      this.getShop()
     } else {
       app.tokenCallback = token => {
-        this.getData()
+        this.getShop()
       }
-    }
-    let mediaRes = []
-    let mediaResItem = [10, 5, 7, 6, 4]
-    for (let i = 0; i < 5; i++) {
-      let mediaResItemRes = []
-      for (let j = 0; j < mediaResItem[i]; j++) {
-        mediaResItemRes.push({
-          id: Number(String(i + 1) + String(j)),
-          img: '/img/img.png',
-          title: '拓脉-训练 ' + i + j,
-          level: String(Math.floor(Math.random() * 5 + 1)),
-          time: '13:30-15:20',
-          status: 2
-        })
-      }
-      mediaRes.push(mediaResItemRes)
     }
 
     this.setData({
       timeItemH: (wx.getSystemInfoSync().windowWidth - 30) / 5,
-      timeData: this.getTime(),
-      mediaRes: mediaRes
+      timeData: this.getTime()
     })
 
   },
@@ -196,16 +267,11 @@ Page({
     }
   },
   onPullDownRefresh: function () {
-    // wx.showLoading({
-    //   title: 'haha',
-    // })
-    // wx.showToast({
-    //   title: 'loading...',
-    //   icon: 'loading',
-    //   duration: 2000
-    // })
-    // setTimeout(() => {
-    //   wx.stopPullDownRefresh()
-    // }, 2000)
+    this.setData({
+      mediaRes: [],
+      menuListIndex: 0,
+      swiperItem: 0
+    })
+    this.getShop()
   }
 })
