@@ -15,6 +15,7 @@ Page({
     accountList: []
   },
   getUserInfo: function(e) {
+    app.setuserinfo(e.detail)
     app.globalData.userInfo = e.detail.userInfo
     this.setData({
       userInfo: e.detail.userInfo,
@@ -27,9 +28,9 @@ Page({
       url: '/pages/' + data.path + '/' + data.path
     })
   },
-  getMyMainInfo () {
+  getMyMainInfo (id) {
     app.$('GetMyMainInfo', {
-      UserId: app.userId
+      UserId: app.userId || id
     }).then(res => {
       let d = res.data
       this.setData({
@@ -39,6 +40,8 @@ Page({
           '私教课x' + d.privateCourseNums + '. ' + util.formatTime(d.privateCourseExpireTime) + '过期'
         ]
       })
+      // 停止下拉状态
+      wx.stopPullDownRefresh()
     })
   },
   /**
@@ -75,6 +78,16 @@ Page({
         }
       })
     }
+
+    app.setUserCallback = id => {
+      this.setData({
+        userId: app.userId
+      })
+      this.getMyMainInfo(id)
+    }
+    this.getMyMainInfo()
+  },
+  onPullDownRefresh: function () {
     this.getMyMainInfo()
   }
 })

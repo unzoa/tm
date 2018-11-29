@@ -5,12 +5,13 @@
     "pages/me/me",
     "pages/bookList/bookList",
     "pages/bookSuccess/bookSuccess",
-    "pages/help/help"
+    "pages/help/help",
+    "pages/out/out"
   ],
   "window": {
     "backgroundTextStyle": "dark",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "拓脉",
+    "navigationBarTitleText": "私教邦训练营",
     "navigationBarTextStyle": "black"
   },
   "tabBar": {

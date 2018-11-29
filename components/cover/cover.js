@@ -9,14 +9,16 @@ Component({
     paddingLR: Number,
     autoplay: Boolean,
     interval: Number,
-    current: Number
+    current: Number,
+    jumpOrView: String
   },
 
   /**
    * 组件的初始数据
    */
   data: {
-    imgWH: []
+    imgWH: [],
+    imgSrcArr: []
   },
 
   /**
@@ -43,15 +45,32 @@ Component({
         res[e.target.dataset.id].w = wx.getSystemInfoSync().windowWidth - coverPadding
         res[e.target.dataset.id].h = (wx.getSystemInfoSync().windowWidth - coverPadding) / ratio
       }
+      
+      // imgSrcArr
+      let isa = []
+      res.forEach((i, j) => {
+        isa.push(i.img)
+      })
+
       this.setData({
-        res: res
+        res: res,
+        imgSrcArr: isa
       })
     },
-    previewImg () {
-      wx.previewImage({
-        current: '', // 当前显示图片的http链接
-        urls: [] // 需要预览的图片http链接列表
-      })
+    previewImg (e) {
+      let d = e.currentTarget.dataset
+      // 判断动作jumpOrView
+      if (this.data.jumpOrView === 'view') {
+        wx.previewImage({
+          current: this.data.imgSrcArr[d.id], // 当前显示图片的http链接
+          urls: this.data.imgSrcArr // 需要预览的图片http链接列表
+        })
+      } else {
+        // 外链
+        wx.navigateTo({
+          url: '/pages/out/out?src=' + this.data.res[d.id].jump
+        })
+      }
     }
   }
 })

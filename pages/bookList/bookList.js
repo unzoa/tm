@@ -18,7 +18,7 @@ Page({
       for (let i = 0; i < d.length; i++) {
         mediaRes.push({
           id: d[i].id,
-          img: d[i].coursePhoto,
+          img: app.imgPath + d[i].coursePhoto + '.png',
           title: d[i].courseName,
           level: d[i].courseDifficulty,
           time: d[i].reserveDatetime.split('T')[0] + ' ' + d[i].reserveDatetime.split('T')[1],

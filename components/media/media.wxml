@@ -8,9 +8,9 @@ bindtap="checkThis"
 data-id="{{i.id}}">
   <view class="media-cover">
     <image
-    src="{{i.img}}"
-    mode="aspectFit"
-    lazy-load="true"></image>
+      src="{{i.img}}"
+      mode="aspectFill"
+      lazy-load="true"></image>
   </view>
   <view class="media-content">
     <view class="media-title">{{i.title}}</view>

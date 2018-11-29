@@ -14,18 +14,7 @@ Page({
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     titleHeight: 25,
     coverHeight: 150,
-    coverData: [
-      {
-        img: '/img/aa.jpg',
-        w: 0,
-        h: 0
-      },
-      {
-        img: '/img/bb.jpg',
-        w: 0,
-        h: 0
-      } 
-    ],
+    coverData: [],
     timeItemH: 0,
     timeData: [],
     menuListIndex: 0,
@@ -45,11 +34,11 @@ Page({
         })
       },
       fail: (res) => {
-        wx.showToast({
-          title: '失败',
-          icon: 'none',
-          duration: 2000
-        })
+        // wx.showToast({
+        //   title: '失败',
+        //   icon: 'none',
+        //   duration: 2000
+        // })
       },
       complete: (res) => {
       }
@@ -77,7 +66,6 @@ Page({
   },
   changeMenu (e) {
     let data = e.currentTarget.dataset
-    console.log(data.index)
     this.setData({
       menuListIndex: data.index
     })
@@ -168,6 +156,7 @@ Page({
       // 遍历课程
       if (res.code === 0) {
         let d = res.data.venueHomeCourseList
+        let p = res.data.venuePhotoList.venueDataList
 
         let timeNav = this.getTime()
         let mediaRes = []
@@ -180,7 +169,7 @@ Page({
               i.courseList.forEach((x, y) => {
                 mediaResItemRes.push({
                   id: x.courseId,
-                  img: x.coursePhoto,
+                  img: app.imgPath + x.coursePhoto,
                   title: x.courseName,
                   level: x.courseLevel,
                   time: x.teachingTime,
@@ -192,8 +181,22 @@ Page({
 
           mediaRes.push(mediaResItemRes)
         })
-        // console.log(mediaRes)
+
+        // cover data
+        let cd = []
+        if (p.length) {
+          p.forEach((i, j) => {
+            cd.push({
+              img: app.imgPath + i.photoPath,
+              w: 0,
+              h: 0,
+              jump: i.photoHref
+            })
+          })
+        }
+
         this.setData({
+          coverData: cd,
           mediaRes: mediaRes
         })
       }
@@ -268,6 +271,7 @@ Page({
   },
   onPullDownRefresh: function () {
     this.setData({
+      coverData: [],
       mediaRes: [],
       menuListIndex: 0,
       swiperItem: 0

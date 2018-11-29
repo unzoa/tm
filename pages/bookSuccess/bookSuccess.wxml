@@ -1,5 +1,5 @@
 <view class="book-success p515">
-  <text>预约成功</text>
+  <text>{{res.bookStatus}}</text>
 
   <view class="info-class-list-con">
     <view class="info-list-item">课程名字：{{res.name}}</view>
@@ -26,7 +26,10 @@
     </view>
   </view>
 
-  <view class="positionBottom btn btn-block" bindtap="cancelShow">取消预约</view>
+  <view
+    wx:if="{{res.bookStatus !== '取消'}}"
+    class="positionBottom btn btn-block"
+    bindtap="cancelShow">取消预约</view>
 
   <view class="cancel-book-overlay" wx:if="{{cancelShow}}">
     <view class="cancel-option-con">

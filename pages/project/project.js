@@ -7,18 +7,7 @@ Page({
    */
   data: {
     id: 1,
-    coverData: [
-      {
-        img: '/img/aa.jpg',
-        w: 0,
-        h: 0
-      },
-      {
-        img: '/img/bb.jpg',
-        w: 0,
-        h: 0
-      } 
-    ],
+    coverData: [],
     current: 0,
     res: {
       title: '',
@@ -68,19 +57,16 @@ Page({
       if (res.code === 0) {
         let pr = this.data.res
         let d = res.data
+        let photos = d.coursePhoto
         pr.title = d.courseName
-        pr.coverData = [
-          {
-            img: '/img/aa.jpg',
+        photos.forEach((i, j) => {
+          pr.coverData.push({
+            img: app.imgPath + i.photoPath,
             w: 0,
-            h: 0
-          },
-          {
-            img: '/img/bb.jpg',
-            w: 0,
-            h: 0
-          } 
-        ]
+            h: 0,
+            jump: ''
+          })
+        })
         pr.coach = d.coachName
         pr.time = d.schooltime
         pr.placeName = d.venueAddress

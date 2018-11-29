@@ -8,9 +8,10 @@
 
 .media-cover {
   width: 4.1rem;
+  height: 4.1rem;
 }
 .media-cover image{
-  display: block;
+  display: '';
   width: 4.1rem;
   height: 4.1rem;
   background-color: #eeeeee;

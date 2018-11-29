@@ -23,8 +23,9 @@
     res="{{coverData}}"
     height="{{coverHeight}}"
     paddingLR="30"
-    interval="2000"
+    interval="3000"
     autoplay="true"
+    jumpOrView="jump"
     style="display: block; height: 100%;" />
   </view>
 

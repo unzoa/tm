@@ -1,8 +1,7 @@
 <swiper
 autoplay="{{autoplay}}"
 interval="{{interval}}"
-current="{{current}}"
-bindtap="previewImg">
+current="{{current}}">
   <block
   wx:for="{{res}}"
   wx:for-item="i"
@@ -10,9 +9,10 @@ bindtap="previewImg">
   wx:key="j">
     <swiper-item>
       <image
-      mode="aspectFit"
+      mode="aspectFill"
       lazy-load
       bindload="imageLoad"
+      bindtap="previewImg"
       data-id='{{j}}'
       style="width: {{i.w}}px; height: {{i.h}}px;"
       src="{{i.img}}" />

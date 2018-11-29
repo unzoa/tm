@@ -1,5 +1,7 @@
 //app.js
 App({
+  apiPath: '',
+  imgPath: '',
   token: '',
   openid: '',
   userId: '',
@@ -26,11 +28,9 @@ App({
         success: res => {
           // 发送 res.code 到后台换取 openId, sessionKey, unionId
           // console.log(res)
-          // this.getToken(res.code)
           _this.$('gettoken', {
             code: res.code
           }).then(res => {
-            // console.log(res)
             if (res.code === 0) {
               _this.token = res.data.token
               _this.openid = res.data.openId
@@ -47,6 +47,7 @@ App({
       // 获取用户信息
       wx.getSetting({
         success: res => {
+          // 判断是否返回了用户信息 *****
           if (res.authSetting['scope.userInfo']) {
             // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
             wx.getUserInfo({
@@ -61,36 +62,39 @@ App({
                 // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
                 // 所以此处加入 callback 以防止这种情况
                 if (this.userInfoReadyCallback) {
+                  console.log(res, 121212121)
+                  this.setuserinfo(res)
                   this.userInfoReadyCallback(res)
                 }
-
-                // 注册用户信息
-                this.$('setuserinfo', {
-                  openid: this.openid,
-                  photo: res.userInfo.avatarUrl,
-                  nickname: res.userInfo.nickName,
-                  sex: Number(res.userInfo.gender) ? !(Number(res.userInfo.gender) - 1) : 1
-                }).then(res => {
-                  console.log(res)
-                  this.userId = res.data.id
-                })
               }
             })
           }
         },
         fail: res => {
-          console.log(res)
+          // console.log(res)
         },
         complete: (res) => {
           // console.log(res)
-          // if (!res.authSetting['scope.userInfo']) {
-          // }
         }
       })
     })
   },
   globalData: {
     userInfo: null
+  },
+  setuserinfo (res) {
+    // 注册用户信息
+    this.$('setuserinfo', {
+      openid: this.openid,
+      photo: res.userInfo.avatarUrl,
+      nickname: res.userInfo.nickName,
+      sex: Number(res.userInfo.gender) ? !(Number(res.userInfo.gender) - 1) : 1
+    }).then(res => {
+      this.userId = res.data.id
+      if (this.setUserCallback) {
+        this.setUserCallback(res.data.id)
+      }
+    })
   },
   $ (Interface, requestData, method) {
     let _this = this
