@@ -1,4 +1,7 @@
 <view class="book-list p515">
-  <text class="book-list-title">预约记录</text>
+  <view class="book-list-title">
+    <text wx:if="{{!mediaRes.length}}">无</text>
+    <text>预约记录</text>
+  </view>
   <Media res="{{mediaRes}}" jumpTo="bookSuccess" />
 </view>

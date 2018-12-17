@@ -18,9 +18,10 @@ Page({
       for (let i = 0; i < d.length; i++) {
         mediaRes.push({
           id: d[i].id,
-          img: app.imgPath + d[i].coursePhoto + '.png',
+          img: app.imgPath + d[i].coachPhoto,
           title: d[i].courseName,
           level: d[i].courseDifficulty,
+          levelInfo: `L${d[i].courseDifficultyMin}~L${d[i].courseDifficultyMax}`,
           time: d[i].reserveDatetime.split('T')[0] + ' ' + d[i].reserveDatetime.split('T')[1],
           status: app.voucherStatus[d[i].voucherStatus]
         })

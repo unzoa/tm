@@ -4,16 +4,13 @@ const app = getApp()
 
 Page({
   data: {
-    hideAd: true,
-    act: '',
+    showLogin: false,
+    getTokenShow: true,
     shopArr: [],
     shopIndex: 0,
-    motto: '',
-    userInfo: {},
-    hasUserInfo: false,
-    canIUse: wx.canIUse('button.open-type.getUserInfo'),
-    titleHeight: 25,
+    titleHeight: 30,
     coverHeight: 150,
+    coverPadding: 30,
     coverData: [],
     timeItemH: 0,
     timeData: [],
@@ -23,29 +20,41 @@ Page({
     top: 0
   },
   // 事件处理函数
+  getUserInfo: function(e) {
+    // console.log(e)
+    if (e.detail.userInfo) {
+      wx.showTabBar()
+      app.globalData.userInfo = e.detail.userInfo
+      app.setuserinfo(e.detail)
+      this.setData({
+        showLogin: false
+      })
+    }
+  },
   scancode () {
     wx.scanCode({
       success: (res) => {
         console.log(res)
-        wx.showToast({
-          title: '成功',
-          icon: 'success',
-          duration: 2000
+        app.$('lockControl', {
+          cmd: res.result.split('?')[1].split('=')[1]
+        }).then(lockData => {
+          wx.showToast({
+            title: lockData.msg,
+            icon: 'success',
+            duration: 2000
+          })
         })
-      },
-      fail: (res) => {
-        // wx.showToast({
-        //   title: '失败',
-        //   icon: 'none',
-        //   duration: 2000
-        // })
-      },
-      complete: (res) => {
       }
     })
   },
   // 测试选择器
   bindPickerChange (e) {
+    this.setData({
+      coverData: [],
+      mediaRes: [],
+      menuListIndex: 0,
+      swiperItem: 0
+    })
     // console.log('picker发送选择改变，携带值为', e.detail.value)
     this.getShopInfo(this.data.shopArr[e.detail.value].id)
     this.setData({
@@ -116,7 +125,18 @@ Page({
       top: e.scrollTop
     })
   },
+  clearAll () {
+    this.getTime()
+    this.setData({
+      coverData: [],
+      mediaRes: [],
+      menuListIndex: 0,
+      swiperItem: 0,
+      shopIndex: 0
+    })
+  },
   getShop () {
+    this.clearAll()
     app.$('venuelist', {
       where: 1,
       pageindex: 1,
@@ -127,36 +147,22 @@ Page({
       // console.log(res)
       this.getShopInfo(res.data.venueDataList[0].id)
       this.setData({
+        shopIndex: 0,
         shopArr: res.data.venueDataList
       })
-    }).catch(res => {
-      // alert(JSON.stringify(res))
     })
   },
   getShopInfo (id) {
-    this.setData({
-      mediaRes: [],
-      menuListIndex: 0,
-      swiperItem: 0
-    })
+    this.clearAll()
 
-    let hideAd = () => {
-      let _this = this
-      setTimeout(() => {
-        _this.setData({
-          hideAd: false
-        })
-        wx.showTabBar()
-      }, 2000)
-    }
     app.$('VenueHomeInfo', {
       VenueId: id
     }).then(res => {
       // console.log(res)
       // 遍历课程
       if (res.code === 0) {
-        let d = res.data.venueHomeCourseList
-        let p = res.data.venuePhotoList.venueDataList
+        let d = res.data.venueHomeCourseList // 课程
+        let p = res.data.venuePhotoList.venueDataList // cover
 
         let timeNav = this.getTime()
         let mediaRes = []
@@ -164,14 +170,15 @@ Page({
         timeNav.forEach((m, n) => {
           let mediaResItemRes = []
           d.forEach((i, j) => {
-            let weekTime = i.weekTime.split('-')[1] + '.' + i.weekTime.split('-')[2] // (new Date(i.weekTime).getMonth() + 1) + '.' + new Date(i.weekTime).getDate()
+            let weekTime = i.weekTime.split('-')[1] + '.' + i.weekTime.split('-')[2]
             if (m.month === weekTime) {
               i.courseList.forEach((x, y) => {
                 mediaResItemRes.push({
                   id: x.courseId,
-                  img: app.imgPath + x.coursePhoto,
+                  img: app.imgPath + x.coachPhoto,
                   title: x.courseName,
                   level: x.courseLevel,
+                  levelInfo: `L${x.courseDifficultyMin}~L${x.courseDifficultyMax}`,
                   time: x.teachingTime,
                   status: app.courseReserve[x.courseReserve]
                 })
@@ -180,6 +187,17 @@ Page({
           })
 
           mediaRes.push(mediaResItemRes)
+        })
+
+        // cover con height
+        wx.getImageInfo({
+          src: app.imgPath + p[0].photoPath,
+          success: imgRes => {
+            let ratio = imgRes.width / imgRes.height
+            this.setData({
+              coverHeight: (wx.getSystemInfoSync().windowWidth - this.data.coverPadding) / ratio
+            })
+          }
         })
 
         // cover data
@@ -200,58 +218,37 @@ Page({
           mediaRes: mediaRes
         })
       }
-      hideAd()
       // 停止下拉状态
       wx.stopPullDownRefresh()
     }).catch(error => {
-      hideAd()
       // 停止下拉状态
       wx.stopPullDownRefresh()
     })
   },
   onLoad: function () {
+    let _this = this
     // wx.navigateTo({
     //   url: '/pages/project/project' 
     // })
 
-    if (app.globalData.userInfo) {
-      this.setData({
-        userInfo: app.globalData.userInfo,
-        hasUserInfo: true
-      })
-    } else if (this.data.canIUse){
-      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-      // 所以此处加入 callback 以防止这种情况
-      app.userInfoReadyCallback = res => {
-        this.setData({
-          userInfo: res.userInfo,
-          hasUserInfo: true
-        })
-      }
-    } else {
-      // 在没有 open-type=getUserInfo 版本的兼容处理
-      wx.getUserInfo({
-        success: res => {
-          app.globalData.userInfo = res.userInfo
-          this.setData({
-            userInfo: res.userInfo,
-            hasUserInfo: true
-          })
-        }
-      })
-    }
     /*
     @ 数据
     */
-    // 由于是网络请求，可能会在 Page.onLoad 之后才返回
-    // 所以此处加入 callback 以防止这种情况
-    if (Boolean(app.token)) {
+    app.login().then(() => {
+      _this.setData({
+        getTokenShow: false
+      })
       this.getShop()
-    } else {
-      app.tokenCallback = token => {
-        this.getShop()
-      }
-    }
+      app.getSetting().then(setData => {
+        // 第二次得到授权，可以获取用户信息
+        wx.showTabBar()
+      }).catch(err => {
+        // 第一次需要手动登陆得到用户信息，显示控制按钮
+        _this.setData({
+          showLogin: true
+        })
+      })
+    })
 
     this.setData({
       timeItemH: (wx.getSystemInfoSync().windowWidth - 30) / 5,
@@ -265,17 +262,11 @@ Page({
       console.log(res.target)
     }
     return {
-      title: 'Welcome to the SHOP TuoMai',
+      title: '私教邦训练营',
       path: '/pages/index/index'
     }
   },
   onPullDownRefresh: function () {
-    this.setData({
-      coverData: [],
-      mediaRes: [],
-      menuListIndex: 0,
-      swiperItem: 0
-    })
     this.getShop()
   }
 })

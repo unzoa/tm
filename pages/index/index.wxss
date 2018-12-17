@@ -1,15 +1,60 @@
 /**index.wxss**/
+.get-user-con {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  text-align: center;
+  box-sizing: border-box;
+  padding: 20% 30px 0;
+}
+.logo-con image {
+  width: 100px;
+  height: 32.08px;
+}
+.get-user-inner {
+  position: absolute;
+  left: 30px;
+  bottom: 20px;
+  width: calc(100% - 60px);
+}
+.get-user-inner-text {
+  position: relative;
+  bottom: 15px;
+  font-size: 18px;
+}
+.get-user-inner button {
+  background-color: #333;
+  color: #fff;
+  border-radius: 0;
+}
+
 .index-title-con{
   display: flex;
 }
 .piker-index-page {
   width: 70%;
 }
+.picker {
+  position: relative;
+  top: 4px;
+  font-size: 22px;
+  line-height: 22px;
+}
 .scan-con {
+  display: flex;
+  justify-content: flex-end;
   width: 30%;
-  text-align: right;
+  line-height: 30px;
+}
+.scan-text {
+  margin-right: 3px;
+  font-size: 16px;
 }
 .scan-con image {
+  position: relative;
+  top: 2.5px;
   width: 25px;
   height: 25px;
 }
@@ -33,13 +78,15 @@
   justify-content: center;
 }
 .time-md {
+  color: #353535;
+  font-weight: bold;
   font-size: 0.9rem;
   box-shadow: 0 0 5px 1px #d8d8d8;
 }
 .time-md view {text-align: center;}
 .time-cn {
   width: 100%;
-  color: #999;
+  color: #888;
   font-size: 1.2rem;
 }
 
@@ -55,8 +102,8 @@
   box-sizing: border-box;
   padding: 30px 15px;
   text-align: center;
-  color: #999;
-  font-size: 1.5rem;
+  color: #888;
+  font-size: 1rem;
 }
 
 .ad-con {

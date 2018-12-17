@@ -9,6 +9,7 @@ Page({
     res: {
       name: '',
       level: 1,
+      levelInfo: '',
       place: '',
       coach: '',
       time: '',
@@ -17,7 +18,8 @@ Page({
       bookTime: ''
     },
     cancelShow: false,
-    msg: ''
+    msg: '',
+    id: ''
   },
   cancelShow () {
     this.setData({
@@ -34,7 +36,7 @@ Page({
     if (b === 'true') {
       // 异步取消预约
       app.$('CancelReserve', {
-        ReserveId: app.userId
+        ReserveId: this.data.id
       }).then(res => {
         this.setData({msg: res.msg})
         this.selectComponent('#message').show()
@@ -54,6 +56,7 @@ Page({
       let r= this.data.res
       r.name = d.coachName
       r.level = d.courseDifficulty
+      r.levelInfo = `L${d.courseDifficultyMin}~L${d.courseDifficultyMax}`
       r.place = d.venueName
       r.coach = d.coachName
       r.time = d.schooltime.split('T')[0] + ' ' + d.schooltime.split('T')[1]
@@ -71,5 +74,8 @@ Page({
   onLoad: function (options) {
     // 数据
     this.getReserveDetail(options.id)
+    this.setData({
+      id: options.id
+    })
   }
 })

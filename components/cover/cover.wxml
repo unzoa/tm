@@ -3,6 +3,7 @@ autoplay="{{autoplay}}"
 interval="{{interval}}"
 current="{{current}}">
   <block
+  wx:if="{{res.length}}"
   wx:for="{{res}}"
   wx:for-item="i"
   wx:for-index="j"

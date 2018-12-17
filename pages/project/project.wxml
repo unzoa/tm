@@ -1,6 +1,6 @@
 <view class="project-con">
   <!-- title -->
-  <view class="prject-title p015">
+  <view class="project-title p015">
     <text>{{res.title}}</text>
   </view>
 
@@ -9,7 +9,7 @@
     <Cover
     res="{{res.coverData}}"
     height="{{coverHeight}}"
-    paddingLR="30"
+    paddingLR="{{coverPadding}}"
     interval="2000"
     autoplay="true"
     current="current"
@@ -82,7 +82,7 @@
           wx:key="n">
             <view class="dialog-inner-item">
               <image
-              src="{{m.wxIcon}}"
+              src="{{m.wxIcon || '/img/img.png'}}"
               mode="widthFix"></image>
               <view>{{m.username ? m.username : 'user'}}</view>
             </view>
@@ -93,14 +93,15 @@
     <!-- level -->
     <view class="project-intro-level">
       课程难度：
-      <image
+      <!-- <image
       wx:for="{{[1, 2, 3, 4, 5]}}"
       wx:for-index="n"
       wx:for-item="m"
       wx:key="n"
       wx:if="{{m <= res.level}}"
-      src="/img/star.png"></image>
-      (适合{{res.levelFit}}健身者)
+      src="/img/star.png"></image> -->
+      {{res.levelInfo}}
+      ({{res.levelFit}})
     </view>
 
   </view>
@@ -108,9 +109,9 @@
   <!-- content -->
   <view class="content-con p015" wx:if="{{res.content}}">
     <!-- title -->
-    <view class="content-title">
+    <!-- <view class="content-title">
       <text>课程描述</text>
-    </view>
+    </view> -->
     <!-- rich-text -->
     <view class="content-rich-text">
       <rich-text nodes="{{res.content}}"></rich-text>

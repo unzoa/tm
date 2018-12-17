@@ -15,14 +15,14 @@ data-id="{{i.id}}">
   <view class="media-content">
     <view class="media-title">{{i.title}}</view>
     <view class="media-level">
-      <text>level: </text>
-      <image
+      <text>level: {{i.levelInfo}}</text>
+      <!-- <image
       wx:for="{{[1, 2, 3, 4, 5]}}"
       wx:for-index="n"
       wx:for-item="m"
       wx:key="n"
       wx:if="{{m <= i.level}}"
-      src="/img/star.png"></image>
+      src="/img/star.png"></image> -->
     </view>
     <view class="media-foot">
       <view>{{i.time}}</view>

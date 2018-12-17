@@ -2,16 +2,16 @@
   <text>{{res.bookStatus}}</text>
 
   <view class="info-class-list-con">
-    <view class="info-list-item">课程名字：{{res.name}}</view>
+    <view class="info-list-item info-list-title">课程名字：{{res.name}}</view>
     <view class="info-list-item">
-      课程难度：
-      <image
+      课程难度：{{res.levelInfo}}
+      <!-- <image
         wx:for="{{[1, 2, 3, 4, 5]}}"
         wx:for-index="n"
         wx:for-item="m"
         wx:key="n"
         wx:if="{{m <= res.level}}"
-        src="/img/star.png"></image>
+        src="/img/star.png"></image> -->
     </view>
     <view class="info-list-item">上课场馆：{{res.place}}</view>
     <view class="info-list-item">上课教练：{{res.coach}}</view>

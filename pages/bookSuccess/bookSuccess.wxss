@@ -13,7 +13,9 @@ text {
   line-height: 1.2rem;
   color: #666;
 }
-
+.info-list-title{
+  font-size: 22px;
+}
 image {
   width: 0.8rem;
   height: 0.8rem;

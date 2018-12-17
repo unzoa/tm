@@ -28,5 +28,11 @@
         "text": "我的"
       }
     ]
+  },
+  "usingComponents": {
+    "Media": "/components/media/media",
+    "Cover": "/components/cover/cover",
+    "Message": "/components/message/message",
+    "Dialog": "/components/dialog/dialog"
   }
 }

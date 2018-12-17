@@ -1,2 +1,8 @@
-<!--pages/help/help.wxml-->
-<text>pages/help/help.wxml</text>
+<view class="p515 help-con">
+  <view class="help-con-inner">
+    <view class="help-intro">《超级减脂营》是一家主做减脂团体课的健身工作室，也我的首个线下店，这小程序也才刚上线，若有些地方没做到位望各位多多包涵~</view>
+    <view>遇到问题或想吐槽欢迎直接找我~</view>
+    <view class="mt15">by 阿哲</view>
+    <view>微信/手机：15967798195</view>
+  </view>
+</view>

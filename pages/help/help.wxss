@@ -1,1 +1,15 @@
-/* pages/help/help.wxss */
+.help-con {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: .8rem;
+  height: 100vh;
+  box-sizing: border-box;
+}
+.help-con-inner {
+  position: relative;
+  top: -15%;
+}
+.mt15 {
+  margin-top: 15px;
+}

@@ -1,17 +1,12 @@
-<view style="text-align: {{userInfo.nickName}} ? 'left' : 'center'">
-  <button
-    class="get-user"
-    wx:if="{{!hasUserInfo && canIUse}}"
-    open-type="getUserInfo"
-    bindgetuserinfo="getUserInfo"> 获取头像 </button>
-  <view wx:if="{{userInfo.nickName}}">
+<view>
+  <view>
     <!-- userName -->
     <view class="user-name-con p015">
       <view class="user-name">
         {{userInfo.nickName}}
       </view>
       <view class="user-id">
-        ID：{{userId}}
+        ID：{{showUserId}}
       </view>
     </view>
     <!-- menuList -->

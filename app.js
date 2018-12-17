@@ -6,8 +6,9 @@ App({
   openid: '',
   userId: '',
   courseReserve: {
-    0: '已结束',
-    1: '可预约'
+    0: '已满员',
+    1: '可预约',
+    2: '已结束'
   },
   voucherStatus: {
     '-1': '取消',
@@ -17,70 +18,62 @@ App({
   },
   onLaunch: function () {
     wx.hideTabBar()
-    // 展示本地存储能力
-    var logs = wx.getStorageSync('logs') || []
-    logs.unshift(Date.now())
-    wx.setStorageSync('logs', logs)
+  },
+  globalData: {
+    userInfo: null
+  },
+  login () {
     let _this = this
-    let promise = new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       // 登录
       wx.login({
         success: res => {
           // 发送 res.code 到后台换取 openId, sessionKey, unionId
-          // console.log(res)
+          wx.showLoading()
+          // 获取token， openid
           _this.$('gettoken', {
             code: res.code
-          }).then(res => {
-            if (res.code === 0) {
-              _this.token = res.data.token
-              _this.openid = res.data.openId
-              if (_this.tokenCallback) {
-                _this.tokenCallback(res.data.token)
-              }
-              resolve()
+          }).then(gettokenData => {
+            wx.hideLoading()
+            if (gettokenData.code === 0) {
+              _this.token = gettokenData.data.token
+              _this.openid = gettokenData.data.openId
+              resolve(gettokenData)
             }
           })
         }
       })
     })
-    promise.then(() => {
-      // 获取用户信息
+  },
+  getSetting () {
+    // 获取用户信息
+    return new Promise((resolve, reject) => {
       wx.getSetting({
         success: res => {
           // 判断是否返回了用户信息 *****
           if (res.authSetting['scope.userInfo']) {
             // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
             wx.getUserInfo({
-              success: res => {
-                // console.log(res)
-
-                // 可以将 res 发送给后台解码出 unionId
+              success: UserInfo => {
+                resolve(UserInfo)
                 // userInfo gender 性别 0 未知； 1 男性； 2 女性 Boolean(Number(gender) ? !(Number(gender) - 1) : 1)
                 // userInfo nickName 昵称
                 // userInfo avatarUrl 头像
-                this.globalData.userInfo = res.userInfo
+                this.globalData.userInfo = UserInfo.userInfo
                 // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
                 // 所以此处加入 callback 以防止这种情况
-                if (this.userInfoReadyCallback) {
-                  console.log(res, 121212121)
-                  this.setuserinfo(res)
-                  this.userInfoReadyCallback(res)
-                }
+                this.setuserinfo(UserInfo)
               }
             })
+          } else {
+            reject(`reject authSetting`)
           }
         },
-        fail: res => {
-          // console.log(res)
-        },
-        complete: (res) => {
-          // console.log(res)
+        fail: err => {
+          reject(err)
         }
       })
     })
-  },
-  globalData: {
-    userInfo: null
   },
   setuserinfo (res) {
     // 注册用户信息
@@ -91,9 +84,6 @@ App({
       sex: Number(res.userInfo.gender) ? !(Number(res.userInfo.gender) - 1) : 1
     }).then(res => {
       this.userId = res.data.id
-      if (this.setUserCallback) {
-        this.setUserCallback(res.data.id)
-      }
     })
   },
   $ (Interface, requestData, method) {

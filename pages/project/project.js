@@ -10,11 +10,11 @@ Page({
     coverData: [],
     current: 0,
     res: {
-      title: '',
+      title: '课程名称',
       coverData: [],
-      coach: '',
-      time: '',
-      placeName: '',
+      coach: '教练名字',
+      time: '时间',
+      placeName: '地点',
       placeLatitude: 0,
       placeLongitude: 0,
       booked: {
@@ -24,10 +24,12 @@ Page({
         pp: []
       },
       level: 1,
+      levelInfo: '',
       levelFit: '初级',
       content: ''
     },
     coverHeight: 150,
+    coverPadding: 30,
     cancelShow: false,
     msg: ''
   },
@@ -58,24 +60,39 @@ Page({
         let pr = this.data.res
         let d = res.data
         let photos = d.coursePhoto
+
         pr.title = d.courseName
-        photos.forEach((i, j) => {
-          pr.coverData.push({
-            img: app.imgPath + i.photoPath,
-            w: 0,
-            h: 0,
-            jump: ''
+        if (photos.length) {
+          // cover con height
+          wx.getImageInfo({
+            src: app.imgPath + photos[0].photoPath,
+            success: imgRes => {
+              let ratio = imgRes.width / imgRes.height
+              this.setData({
+                coverHeight: (wx.getSystemInfoSync().windowWidth - this.data.coverPadding) / ratio
+              })
+            }
           })
-        })
+          photos.forEach((i, j) => {
+            pr.coverData.push({
+              img: i.photoPath ? (app.imgPath + i.photoPath) : '/img/img.png',
+              w: 0,
+              h: 0,
+              jump: ''
+            })
+          })
+        }
         pr.coach = d.coachName
         pr.time = d.schooltime
         pr.placeName = d.venueAddress
         pr.placeLatitude = d.lat
         pr.placeLongitude = d.lng
         pr.booked.max = d.limitNumsMax
-        pr.booked.has = d.hasEnroll
+        pr.booked.has = d.reservePerson || 0
         pr.booked.pp = d.reserveList
         pr.level = d.courseLevel
+        pr.levelInfo = `L${d.courseDifficultyMin}~L${d.courseDifficultyMax}`,
+        pr.levelFit = d.courseLevelInfo
         pr.content = d.courseInfo
         this.setData({
           res: pr

@@ -36,9 +36,10 @@ Component({
         ratio = imgwidth / imgheight
       // 数据
       let res = this.data.res
+      // 原则，宽度撑开满屏
       if (ratio >= ratioCon) {
         // 图片的宽度大，正常记录宽度即可
-        res[e.target.dataset.id].w = ratio * coverHeight
+        res[e.target.dataset.id].w = ratio * coverHeight // 根据图片实际比例，计算相对于容器高度的图片宽度
         res[e.target.dataset.id].h = coverHeight
       } else {
         // img 宽度小，则宽度撑开，重新计算高度

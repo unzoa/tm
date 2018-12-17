@@ -13,15 +13,14 @@
 }
 .user-id {
   font-size: .8rem;
-  color: #666;
+  color: #888;
 }
 .menu-list-con {
-  color: #333;
+  color: #353535;
   font-size: 1rem;
   line-height: 2rem;
-  margin-top: 2rem; 
+  margin-top: 4rem; 
 }
-.menu-list-con view {}
 .account-con {
   position: absolute;
   bottom: 15px;
@@ -29,5 +28,5 @@
   text-align: center;
   font-size: .6rem;
   line-height: 1rem;
-  color: #999;
+  color: #888;
 }

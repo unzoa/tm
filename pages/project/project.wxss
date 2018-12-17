@@ -1,21 +1,26 @@
 .project-con {
   padding-bottom: calc(2.4rem + 30px + 10px);
 }
+
+.project-title {
+  font-size: 22px;
+  line-height: 22px;
+}
+
 .cover-con {
   margin: 15px 0;
 }
 
 .project-intro {
   font-size: .8rem;
-  color: #666;
 }
 .project-intro-item {
   display: flex;
-  line-height: 1.3rem;
+  margin-bottom: 5px;
 }
 .checkPlace {
   text-decoration: underline;
-  color: #333;
+  font-weight: bold;
 }
 
 .project-intro-booked-headImgs {

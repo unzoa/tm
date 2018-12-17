@@ -1,4 +1,19 @@
-<view>
+<!-- get user -->
+<view 
+  class="get-user-con"
+  wx:if="{{showLogin}}">
+  <view class="logo-con">
+    <image src="/img/logo.png"/>
+  </view>
+  <view class="get-user-inner">
+    <view class="get-user-inner-text">登陆后方可使用</view>
+    <button
+      class="get-user-btn"
+      open-type="getUserInfo"
+      bindgetuserinfo="getUserInfo">微信登陆</button>
+  </view>
+</view>
+<view wx:if="{{!showLogin && !getTokenShow}}">
   <!-- shop title -->
   <view class="p015 index-title-con" style="height: {{titleHeight}}px;">
     <!-- <text>SHOP TuoMai</text> -->
@@ -13,6 +28,7 @@
       </view>
     </picker>
     <view class="scan-con">
+      <text class="scan-text">开门</text>
       <image src="../../img/scan.png" bindtap="scancode"/>
     </view>
   </view>
@@ -22,7 +38,7 @@
     <Cover
     res="{{coverData}}"
     height="{{coverHeight}}"
-    paddingLR="30"
+    paddingLR="{{coverPadding}}"
     interval="3000"
     autoplay="true"
     jumpOrView="jump"
@@ -79,13 +95,10 @@
     wx:key="j">
     <view
     wx:if="{{i.length === 0 && swiperItem === j}}"
-    class="none-class">
+    class="none-class"
+    style="display: flex; align-items: center; justify-content: center;height: calc(100vh - {{coverHeight + titleHeight + 30 + timeItemH + 10}}px);">
       {{timeData[j].month}} 还没有课程
     </view>
   </view>
-</view>
-<!-- loading Ad -->
-<view wx:if="{{hideAd}}" class="ad-con">
-  <image src="/img/aa.jpg" mode="aspectFill"></image>
 </view>
 
