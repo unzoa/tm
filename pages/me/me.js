@@ -9,7 +9,8 @@ Page({
   data: {
     userInfo: {},
     showUserId: '',
-    accountList: []
+    accountList: [],
+    myLevel: 1
   },
   jumpTo (e) {
     let data = e.currentTarget.dataset
@@ -24,9 +25,10 @@ Page({
       let d = res.data
       this.setData({
         showUserId: d.userCode,
+        myLevel: d.motionlevel,
         accountList: [
-          '团体课体验券x' + d.groupCourseNums + '. ' + util.formatTime(d.groupCourseExpireTime) + '过期',
-          '团体课x' + d.voucherNums + '. ' + util.formatTime(d.voucherExpireTime) + '过期',
+          '团体课体验券x' + d.voucherNums + '. ' + util.formatTime(d.voucherExpireTime) + '过期',
+          '团体课x' + d.groupCourseNums + '. ' + util.formatTime(d.groupCourseExpireTime) + '过期',
           '私教课x' + d.privateCourseNums + '. ' + util.formatTime(d.privateCourseExpireTime) + '过期'
         ]
       })

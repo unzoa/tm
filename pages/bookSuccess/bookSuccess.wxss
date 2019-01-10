@@ -14,7 +14,7 @@ text {
   color: #666;
 }
 .info-list-title{
-  font-size: 22px;
+  /*font-size: 22px;*/
 }
 image {
   width: 0.8rem;

@@ -228,7 +228,7 @@ Page({
   onLoad: function () {
     let _this = this
     // wx.navigateTo({
-    //   url: '/pages/project/project' 
+    //   url: '/pages/bookSuccess/bookSuccess' 
     // })
 
     /*
@@ -241,9 +241,11 @@ Page({
       this.getShop()
       app.getSetting().then(setData => {
         // 第二次得到授权，可以获取用户信息
+        // console.log(111)
         wx.showTabBar()
       }).catch(err => {
         // 第一次需要手动登陆得到用户信息，显示控制按钮
+        wx.hideTabBar()
         _this.setData({
           showLogin: true
         })

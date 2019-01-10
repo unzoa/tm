@@ -7,6 +7,7 @@
   <!-- cover -->
   <view class="cover-con p015" style="height: {{coverHeight}}px;">
     <Cover
+    wx:if="{{res.coverData.length}}"
     res="{{res.coverData}}"
     height="{{coverHeight}}"
     paddingLR="{{coverPadding}}"
@@ -108,10 +109,6 @@
 
   <!-- content -->
   <view class="content-con p015" wx:if="{{res.content}}">
-    <!-- title -->
-    <!-- <view class="content-title">
-      <text>课程描述</text>
-    </view> -->
     <!-- rich-text -->
     <view class="content-rich-text">
       <rich-text nodes="{{res.content}}"></rich-text>
@@ -125,7 +122,17 @@
 
 <view class="cancel-book-overlay" wx:if="{{cancelShow}}">
   <view class="cancel-option-con">
-    <view class="btn btn-block" bindtap="cancelBook" data-b="true">确定</view>
+    <view class="bookEnsureMsg" wx:if="{{courseReserveMsg}}">{{courseReserveMsg}}</view>
+    <button
+      wx:if="{{showLogin}}"
+      class="btn btn-block"
+      open-type="getUserInfo"
+      bindgetuserinfo="getUserInfo">登陆并确定</button>
+    <view
+      wx:if="{{!showLogin}}"
+      class="btn btn-block"
+      bindtap="cancelBook"
+      data-b="true">确定</view>
     <view class="btn btn-white" bindtap="cancelBook" data-b="false">取消</view>
   </view>
 </view>

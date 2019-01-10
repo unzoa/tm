@@ -1,0 +1,47 @@
+<view class="ticket-con" wx:if="{{getTokenShow}}">
+  <view class="ticket-inner">
+    <!-- title -->
+    <view class="ticket-title">领取体验券</view>
+    <!-- cover -->
+    <view class="ticket-cover">
+      <image src="/img/tiyanquan.png" type="aspectFill" />
+      <view class="ticket-cover-center">
+        <view>
+          <view class="ticket-cover-center-title">团体课体验券</view>
+          <view class="ticket-cover-center-time">{{time}}过期</view>
+        </view>
+      </view>
+      <view class="ticket-cover-bottom">
+        <image src="/img/tiyanquan-logo.png" bindload="" type="aspectFill"/>
+        <view class="ticket-cover-bottom-num">No.{{num}}</view>
+      </view>
+    </view>
+    <!-- intro -->
+    <view class="ticket-intro">
+      <view style="font-weight: bold;">使用说明：</view>
+      <view>领取本券可在【私教邦・超级减脂营】免费体验一次健身团体课。</view>
+      <view>本券每人仅限领取一次，使用一次。</view>
+      <view>最终解释权归私教邦®所有。</view>
+      <view class="mt20">门店地址：{{addr}}
+        <text wx:if="{{userId}}">。</text></view>
+      <view>微信/手机：15967798195。</view>
+    </view>
+    <!-- book-con -->
+    <view class="ticket-btn-con">
+      <button
+        wx:if="{{showLogin}}"
+        class="ticket-btn ticket-btn-ensure"
+        open-type="getUserInfo"
+        bindgetuserinfo="getUserInfo">登陆并领取</button>
+      <view
+        bindtap="GetVoucherInfo"
+        class="ticket-btn ticket-btn-ensure"
+        wx:if="{{!showLogin}}">领取</view>
+      <view
+        class="ticket-btn ticket-btn-book"
+        bindtap="goIndex">进入小程序预约</view>
+    </view>
+  </view>
+</view>
+
+<Message id="message" mes="{{msg}}"></Message>

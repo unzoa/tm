@@ -11,7 +11,7 @@ App({
     2: '已结束'
   },
   voucherStatus: {
-    '-1': '取消',
+    '-1': '已取消',
     '0': '预约成功',
     '-2': '预约失败',
     '3': '已处理'
@@ -40,6 +40,8 @@ App({
               _this.openid = gettokenData.data.openId
               resolve(gettokenData)
             }
+          }).catch(err => {
+            _this.login()
           })
         }
       })
@@ -77,13 +79,16 @@ App({
   },
   setuserinfo (res) {
     // 注册用户信息
-    this.$('setuserinfo', {
-      openid: this.openid,
-      photo: res.userInfo.avatarUrl,
-      nickname: res.userInfo.nickName,
-      sex: Number(res.userInfo.gender) ? !(Number(res.userInfo.gender) - 1) : 1
-    }).then(res => {
-      this.userId = res.data.id
+    return new Promise((resolve, reject) => {
+      this.$('setuserinfo', {
+        openid: this.openid,
+        photo: res.userInfo.avatarUrl,
+        nickname: res.userInfo.nickName,
+        sex: Number(res.userInfo.gender) ? !(Number(res.userInfo.gender) - 1) : 1
+      }).then(res => {
+        this.userId = res.data.id
+        resolve(res.data.id)
+      })
     })
   },
   $ (Interface, requestData, method) {

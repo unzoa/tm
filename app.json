@@ -6,7 +6,8 @@
     "pages/bookList/bookList",
     "pages/bookSuccess/bookSuccess",
     "pages/help/help",
-    "pages/out/out"
+    "pages/out/out",
+    "pages/ticket/ticket"
   ],
   "window": {
     "backgroundTextStyle": "dark",

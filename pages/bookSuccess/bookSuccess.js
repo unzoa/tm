@@ -38,9 +38,17 @@ Page({
       app.$('CancelReserve', {
         ReserveId: this.data.id
       }).then(res => {
-        this.setData({msg: res.msg})
+        this.setData({
+          msg: res.msg
+        })
         this.selectComponent('#message').show()
+
         if (res.code === 0) {
+          let dr = this.data.res
+          dr.bookStatus = app.voucherStatus['-1']
+          this.setData({
+            res: dr
+          })
         }
       })
       cancelShow()
@@ -54,12 +62,12 @@ Page({
     }).then(res => {
       let d = res.data
       let r= this.data.res
-      r.name = d.coachName
+      r.name = d.courseName
       r.level = d.courseDifficulty
       r.levelInfo = `L${d.courseDifficultyMin}~L${d.courseDifficultyMax}`
       r.place = d.venueName
       r.coach = d.coachName
-      r.time = d.schooltime.split('T')[0] + ' ' + d.schooltime.split('T')[1]
+      r.time = d.schoolDatetime.split('T')[0] + ' ' + d.schoolDatetime.split('T')[1]
       r.bookNum = d.reserveId
       r.bookStatus = app.voucherStatus[d.voucherStatus]
       r.bookTime = d.reserveDate.split('T')[0] + ' ' + d.reserveDate.split('T')[1]

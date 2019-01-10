@@ -30,3 +30,9 @@
   line-height: 1rem;
   color: #888;
 }
+
+.my-level {
+  position:relative;
+  bottom:35px;
+  font-size:35px;
+}

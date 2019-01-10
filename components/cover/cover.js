@@ -68,9 +68,16 @@ Component({
         })
       } else {
         // 外链
-        wx.navigateTo({
-          url: '/pages/out/out?src=' + this.data.res[d.id].jump
-        })
+        // 是否是优惠券
+        if (isNaN(this.data.res[d.id].jump)) {
+          wx.navigateTo({
+            url: '/pages/out/out?src=' + this.data.res[d.id].jump
+          })
+        } else {
+          wx.navigateTo({
+            url: '/pages/ticket/ticket?id=' + this.data.res[d.id].jump
+          })
+        }
       }
     }
   }

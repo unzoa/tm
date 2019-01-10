@@ -101,6 +101,10 @@
   color: #333;
 }
 
+.bookEnsureMsg {
+  box-sizing: border-box;
+  padding: 20px; 
+}
 .cancel-book-overlay {
   position: fixed;
   top: 0;

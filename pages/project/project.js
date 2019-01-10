@@ -1,12 +1,16 @@
 // pages/project/project.js
 const app = getApp()
+const util = require('../../utils/util.js')
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    showLogin: false, // 登陆按钮显示
+    getTokenShow: false, // token 的回掉显示
     id: 1,
+    userId: 0,
     coverData: [],
     current: 0,
     res: {
@@ -31,7 +35,35 @@ Page({
     coverHeight: 150,
     coverPadding: 30,
     cancelShow: false,
-    msg: ''
+    msg: '',
+    courseReserveMsg: ''
+  },
+  getUserInfo: function(e) {
+    // console.log(e)
+    if (e.detail.userInfo) {
+      // 完成授权
+      // 显示tabbar
+      // 注册用户信息
+      // 获取用户id
+      // 完成领取动作
+      wx.showTabBar()
+      app.globalData.userInfo = e.detail.userInfo
+      app.setuserinfo(e.detail).then(userId => {
+        // 得到用户id，需要领取优惠券
+        console.log(userId)
+        this.setData({
+          userId: userId,
+          cancelShow : false
+        })
+        this.setCourseReserve()
+      })
+      // 显示单独领取按钮
+      this.setData({
+        showLogin: false
+      })
+    } else {
+      console.log('没有授权')
+    }
   },
   checkPlace () {
     let _this = this
@@ -52,6 +84,12 @@ Page({
     this.selectComponent('#dialog').show()
   },
   getCourseInfo (id) {
+    let r = this.data.res
+    r.coverData = []
+    this.setData({
+      res: r,
+      current: 0
+    })
     app.$('GetCourseInfo', {
       'CourseId': id
     }).then(res => {
@@ -94,8 +132,18 @@ Page({
         pr.levelInfo = `L${d.courseDifficultyMin}~L${d.courseDifficultyMax}`,
         pr.levelFit = d.courseLevelInfo
         pr.content = d.courseInfo
+        
+        let courseReserveMsg = ''
+        if (d.isHasvoucher) {
+          courseReserveMsg = '您有一张团体体验券，' + util.formatTime(d.voucherExpireDatetime) + '过期，确认使用吗？'
+        } else {
+          courseReserveMsg = `您还剩余${d.leagueNum}节团体课，确定预约吗？`
+        }
+        pr.voucherId = d.voucherId
+
         this.setData({
-          res: pr
+          res: pr,
+          courseReserveMsg: courseReserveMsg
         })
         // 停止下拉状态
         wx.stopPullDownRefresh()
@@ -107,12 +155,15 @@ Page({
       UserId: app.userId,
       CourseId: this.data.id,
       CourseClassId: 1,
-      VoucherId: 0
+      VoucherId: this.data.res.voucherId
     }).then(res => {
       this.setData({
         msg: res.msg
       })
       this.selectComponent('#message').show()
+      if (res.msg.indexOf('成功')) {
+        this.getCourseInfo(this.data.id)
+      }
     })
   },
   showBookCon () {
@@ -144,22 +195,42 @@ Page({
     this.setData({
       id: options.id
     })
-    this.getCourseInfo(options.id)
-  },
 
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+     /*
+    @ 单个页面分享
+    * 正常程序内跳转不需要等待token请求和用户登陆设置
+    * 而分享后，程序没有经过index.js 
+    */
+    if (!app.userId) {
+      // 是分享后：
+      // 1，获取token、openid;
+      // 2, 显示登陆button, 点击getUserInfo, setuserinfo
+      app.login().then(() => {
+        this.setData({
+          getTokenShow: true, // 得到token
+          showLogin: true
+        })
+      }).then(() => {
+        // 3, 异步后页面动作
+        this.getCourseInfo(options.id)
+      })
+    } else {
+      console.log(app.userId)
+      // 页面动作
+      this.getCourseInfo(options.id)
+      this.setData({
+        userId: app.userId,
+        getTokenShow: true // 得到token
+      })
+    }
   },
   onPullDownRefresh: function () {
-    let r = this.data.res
-    r.coverData = []
-    this.setData({
-      res: r,
-      current: 0
-    })
     this.getCourseInfo(this.data.id)
+  },
+  onShareAppMessage: function () {
+    return {
+      title: '私教邦-' + this.data.res.title,
+      path: '/pages/project/project?id=' + this.data.id
+    }
   }
 })

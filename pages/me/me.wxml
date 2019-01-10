@@ -16,6 +16,7 @@
     </view>
     <!-- account -->
     <view class="account-con">
+      <view class="my-level">Level: {{myLevel}}</view>
       <view>账户余额：</view>
       <view
       wx:for="{{accountList}}"
